@@ -27,13 +27,15 @@ import { PatientComponent } from './patient/patient.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SinglePatientComponent } from './single-patient/single-patient.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PatientComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    SinglePatientComponent
   ],
   imports: [
     BrowserModule,

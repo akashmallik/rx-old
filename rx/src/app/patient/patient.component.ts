@@ -65,10 +65,6 @@ export class PatientComponent implements OnInit {
   ngOnInit() {
   }
 
-  file(event) {
-    console.log(event);
-  }
-
   save(value) {
     const formData: FormData = new FormData();
     formData.append('name', value.name);
@@ -85,7 +81,7 @@ export class PatientComponent implements OnInit {
       .subscribe(
         response => {
           console.log(response);
-          alert('Successfully Updated!');
+          // alert('Successfully Updated!');
         },
         error => {
           console.log(error.error);
@@ -96,7 +92,7 @@ export class PatientComponent implements OnInit {
       .subscribe(
         response => {
           console.log(response);
-          alert('Successfully Added!');
+          // alert('Successfully Added!');
         },
         error => {
           console.log(error.error);

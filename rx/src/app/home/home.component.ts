@@ -15,7 +15,7 @@ export interface Patient {
   blood_group: string;
   avatar: string;
 }
-let ELEMENTDATA: Patient[] = [];
+let ELEMENTDATA: Patient[];
 
 @Component({
   selector: 'app-home',
@@ -24,8 +24,17 @@ let ELEMENTDATA: Patient[] = [];
 })
 export class HomeComponent implements OnInit {
 
-
-  constructor(private patientService: PatientService) {}
+  constructor(private patientService: PatientService) {
+    this.patientService.getAll()
+    .subscribe(
+      (data: Patient[]) => {
+        ELEMENTDATA = data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -34,12 +43,6 @@ export class HomeComponent implements OnInit {
   dataSource = new MatTableDataSource<Patient>(ELEMENTDATA);
 
   ngOnInit() {
-    this.patientService.getAll()
-    .subscribe(
-      (data: any[]) => {
-        ELEMENTDATA = data;
-      }
-    );
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
