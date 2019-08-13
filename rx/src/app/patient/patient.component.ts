@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../services/patient.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 export interface Patient {
   id: number;
@@ -50,6 +51,7 @@ export class PatientComponent implements OnInit {
   constructor(
     private patientService: PatientService,
     private router: Router,
+    private toastr: ToastrService,
     private route: ActivatedRoute ) {
       this.id = this.route.snapshot.paramMap.get('id');
       if (this.id) {
@@ -80,8 +82,7 @@ export class PatientComponent implements OnInit {
       this.patientService.update(this.id, formData)
       .subscribe(
         response => {
-          console.log(response);
-          // alert('Successfully Updated!');
+          this.toastr.success('Successfully Updated', 'Success');
         },
         error => {
           console.log(error.error);
@@ -91,8 +92,7 @@ export class PatientComponent implements OnInit {
       this.patientService.create(formData)
       .subscribe(
         response => {
-          console.log(response);
-          // alert('Successfully Added!');
+          this.toastr.success('Successfully Added', 'Success');
         },
         error => {
           console.log(error.error);

@@ -13,6 +13,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -54,6 +55,7 @@ import { SinglePatientComponent } from './single-patient/single-patient.componen
     MatPaginatorModule,
     MatSortModule,
     HttpClientModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

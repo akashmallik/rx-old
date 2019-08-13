@@ -34,6 +34,18 @@ class Patient(models.Model):
 
     # def get_absolute_url(self):
     #     return reverse('patient_details', kwargs={'pk': self.pk})
+    
+class Encounter(models.Model):
+    date = models.DateField(auto_now=True)
+    TYPE_CHOICES = (
+        ('', 'Select Type'),
+        ('ODP', 'ODP'),
+    )
+    visit_type = models.CharField(max_length=6, choices=TYPE_CHOICES,)
+    patient =  models.ForeignKey(Patient, on_delete=models.CASCADE, null =True)
+    def __str__(self):
+        return self.patient.name+'_'+str(self.date)
+
 
 class Examination(models.Model):
     pulse = models.SmallIntegerField()
@@ -42,24 +54,14 @@ class Examination(models.Model):
     Resp_Rate = models.SmallIntegerField()
     height = models.SmallIntegerField()
     lifestyle = models.CharField(max_length=6)
+    encounter = models.OneToOneField(Encounter, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.bp
     
-class Encounter(models.Model):
-    date = models.DateField()
-    TYPE_CHOICES = (
-        ('', 'Select Type'),
-        ('ODP', 'ODP'),
-    )
-    visit_type = models.CharField(max_length=6, choices=TYPE_CHOICES,)
-    examination = models.OneToOneField(Examination, on_delete=models.CASCADE, null=True)
-    patient =  models.ForeignKey(Patient, on_delete=models.CASCADE, null =True)
-    def __str__(self):
-        return self.patient.name+'_'+str(self.date)
 
 class Advice(models.Model):
     advice = models.TextField()
-    encounter =  models.ForeignKey(Encounter, on_delete=models.CASCADE, null=True)
+    patient =  models.ForeignKey(Patient, on_delete=models.CASCADE, null =True)
     def __str__(self):
         return self.advice

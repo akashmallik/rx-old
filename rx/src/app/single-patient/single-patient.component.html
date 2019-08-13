@@ -1,12 +1,36 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <h2>{{ patient.name }}</h2>
             <strong>Sex:</strong> {{ patient.sex }} <br>
             <strong>Blood Group:</strong> {{ patient.blood_group }} <br>
             <strong>Phone:</strong> {{ patient.phone }} <br>
             <strong>Email:</strong> {{ patient.email }} <br>
             <strong>Address:</strong> {{ patient.address }}
+            <div *ngFor="let e of encounters; index as i"> <strong>Encounter</strong> -{{ i+1 }} [{{ e.date }}]</div>
+            <form #encounterForm="ngForm" (ngSubmit)="encounter(encounterForm.value)" class="example-form">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Visit Type</mat-label>
+                    <mat-select ngModel name="visit_type">
+                        <mat-option *ngFor="let v of visit" [value]="v.key">
+                        {{ v.value }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <button mat-raised-button color="primary">Submit</button>
+            </form>
+        </div>
+        <div class="col-md-8">
+            <div *ngFor="let n of advices">{{ n.advice }}</div>
+            {{ patient.advice }}
+            <form #adviceForm="ngForm" (ngSubmit)="advice(adviceForm.value)" class="example-form">
+                <mat-form-field class="example-full-width">
+                    <textarea matInput [(ngModel)]="patient.advice" name="advice" placeholder="Advice"></textarea>
+                </mat-form-field>
+
+                <button mat-raised-button color="primary">Submit</button>
+            </form>
         </div>
     </div>
 </div>
