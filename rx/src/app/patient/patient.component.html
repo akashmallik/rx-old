@@ -1,0 +1,68 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <form #heroForm="ngForm" (ngSubmit)="save(heroForm.value)" class="example-form">
+                <div class="row">
+                    <div class="col-md-8">
+                        <mat-form-field class="example-full-width">
+                            <input matInput [(ngModel)]="patient.name" name="name" placeholder="Patient Name">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <input matInput [(ngModel)]="patient.age" name="age" placeholder="Age">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Sex</mat-label>
+                            <mat-select [(ngModel)]="patient.sex" name="sex">
+                                <mat-option *ngFor="let s of sex" [value]="s.key">
+                                {{ s.value }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Blood Group</mat-label>
+                            <mat-select [(ngModel)]="patient.blood_group" name="blood_group">
+                                <mat-option *ngFor="let b of blood" [value]="b.key">
+                                {{ b.value }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <input matInput [(ngModel)]="patient.avatar" name="avatar" placeholder="Avatar">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <input matInput [(ngModel)]="patient.phone" name="phone" placeholder="Phone">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <input matInput [(ngModel)]="patient.email" name="email" placeholder="Email">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <mat-form-field class="example-full-width">
+                    <textarea matInput [(ngModel)]="patient.address" name="address" placeholder="Address"></textarea>
+                </mat-form-field>
+
+                <button mat-raised-button color="primary">Submit</button>
+            </form>
+    
+        </div>
+        <div class="col-md-4">
+    
+        </div>
+    </div>
+</div>
