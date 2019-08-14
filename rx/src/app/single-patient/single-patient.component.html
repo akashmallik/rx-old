@@ -1,21 +1,32 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
-            <h2>{{ patient.name }}</h2>
-            <strong>Sex:</strong> {{ patient.sex }} <br>
-            <strong>Blood Group:</strong> {{ patient.blood_group }} <br>
-            <strong>Phone:</strong> {{ patient.phone }} <br>
-            <strong>Email:</strong> {{ patient.email }} <br>
-            <strong>Address:</strong> {{ patient.address }}
+        <div class="col-md-3">
+            <mat-card class="example-card">
+                <mat-card-header>
+                    <div mat-card-avatar class="example-header-image"></div>
+                    <mat-card-title>{{ patient.name }}</mat-card-title>
+                    <mat-card-subtitle><strong>Sex:</strong> {{ patient.sex }} <strong>Age:</strong> {{ patient.age }}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <strong>Blood Group:</strong> {{ patient.blood_group }} <br>
+                    <strong>Phone:</strong> {{ patient.phone }} <br>
+                    <strong>Email:</strong> {{ patient.email }} <br>
+                    <strong>Address:</strong> {{ patient.address }}
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button>LIKE</button>
+                    <button mat-button>SHARE</button>
+                </mat-card-actions>
+            </mat-card>
 
-            <div mat-list>
-                <a mat-list-item *ngFor="let e of encounters; index as i"
+            <mat-list>
+                <a mat-button *ngFor="let e of encounters; index as i"
                 routerLink="/patients/{{id}}/"
                 [queryParams]="{ encounter: e.id }"
                 [class.active]="encounterId == e.id">
                     <strong>Encounter-{{ i+1 }}</strong> [{{ e.date }}]
                 </a>
-            </div>
+            </mat-list>
             <form #encounterForm="ngForm" (ngSubmit)="encounter(encounterForm.value)" class="example-form">
                 <mat-form-field class="example-full-width">
                     <mat-label>Visit Type</mat-label>
@@ -29,14 +40,24 @@
                 <button mat-raised-button color="primary">Submit</button>
             </form>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             <mat-tab-group>
-                <mat-tab label="First"> Content 1 </mat-tab>
-                <mat-tab label="Second"> Content 2 </mat-tab>
+                <mat-tab label="C/C"> 
+                    {{ encount.id }} {{ encount.date }}
+                </mat-tab>
+                <mat-tab label="Medicine">
+                    <div *ngFor="let n of medicines">{{ n.medicine }}</div>
+                    <form #medicineForm="ngForm" (ngSubmit)="medicine(medicineForm.value); medicineForm.reset()" class="example-form">
+                        <mat-form-field class="example-full-width">
+                            <textarea matInput ngModel name="medicine" placeholder="medicine"></textarea>
+                        </mat-form-field>
+        
+                        <button mat-raised-button color="primary">Submit</button>
+                    </form>
+                </mat-tab>
                 <mat-tab label="Advice">
-                    <div *ngFor="let n of advices">{{ n.advice }} {{ n.id }}</div>
-                    {{ patient.advice }}
-                    <form #adviceForm="ngForm" (ngSubmit)="advice(adviceForm.value)" class="example-form">
+                    <div *ngFor="let n of advices">{{ n.advice }}</div>
+                    <form #adviceForm="ngForm" (ngSubmit)="advice(adviceForm.value); adviceForm.reset()" class="example-form">
                         <mat-form-field class="example-full-width">
                             <textarea matInput [(ngModel)]="patient.advice" name="advice" placeholder="Advice"></textarea>
                         </mat-form-field>

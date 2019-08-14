@@ -34,7 +34,15 @@ class Patient(models.Model):
 
     # def get_absolute_url(self):
     #     return reverse('patient_details', kwargs={'pk': self.pk})
+
+
+class Medicine(models.Model):
+    medicine = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.medicine
     
+
 class Encounter(models.Model):
     date = models.DateField(auto_now=True)
     TYPE_CHOICES = (
@@ -43,6 +51,7 @@ class Encounter(models.Model):
     )
     visit_type = models.CharField(max_length=6, choices=TYPE_CHOICES,)
     patient =  models.ForeignKey(Patient, on_delete=models.CASCADE, null =True)
+    medicines = models.ManyToManyField(Medicine, null=True, blank = True)
     def __str__(self):
         return self.patient.name+'_'+str(self.date)
 

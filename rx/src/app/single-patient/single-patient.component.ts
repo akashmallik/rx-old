@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { AdviceService } from '../services/advice.service';
 import { EncounterService } from '../services/encounter.service';
 import { ToastrService } from 'ngx-toastr';
+import { MedicineService } from '../services/medicine.service';
+
 
 export interface Patient {
   id: number;
@@ -42,7 +44,8 @@ export class SinglePatientComponent implements OnInit {
   patient: Patient[] = [];
   advices: any[] = [];
   encounters: any[] = [];
-  filteredEncounters: any[] = [];
+  public encount: any = [];
+  medicines: any[] = [];
   public id: any;
   public encounterId: any;
 
@@ -54,11 +57,18 @@ export class SinglePatientComponent implements OnInit {
     private patientService: PatientService,
     private adviceService: AdviceService,
     private encounterService: EncounterService,
+    private medicineService: MedicineService,
     private toastr: ToastrService,
     private route: ActivatedRoute) {
       route.queryParamMap.subscribe(
         params => {
           this.encounterId = params.get('encounter');
+          this.encounterService.get(this.encounterId)
+          .subscribe(
+            (data: any[]) => {
+              this.encount =  data;
+            }
+          );
         }
       );
       this.id = this.route.snapshot.paramMap.get('id');
@@ -80,6 +90,12 @@ export class SinglePatientComponent implements OnInit {
           this.encounters = data.filter(p => p.patient == this.id);
         }
       );
+      this.medicineService.getAll()
+      .subscribe(
+        (data: any[]) => {
+          this.medicines = data;
+        }
+      );
     }
 
   ngOnInit() {
@@ -89,11 +105,11 @@ export class SinglePatientComponent implements OnInit {
     const formData: FormData = new FormData();
     formData.append('advice', data.advice);
     formData.append('patient', this.id);
-    console.log(formData);
     this.adviceService.create(formData)
     .subscribe(
-      (x: any[]) => {
-        console.log(x);
+      response => {
+        this.advices.push(data);
+        this.toastr.success('Successfully Added', 'Success');
       }
     );
   }
@@ -102,10 +118,22 @@ export class SinglePatientComponent implements OnInit {
     const formData: FormData = new FormData();
     formData.append('visit_type', data.visit_type);
     formData.append('patient', this.id);
-    console.log(formData);
     this.encounterService.create(formData)
     .subscribe(
-      (response: any[]) => {
+      response => {
+        this.encounters.push(data);
+        this.toastr.success('Successfully Added', 'Success');
+      }
+    );
+  }
+  medicine(data) {
+    const formData: FormData = new FormData();
+    formData.append('medicine', data.medicine);
+    // formData.append('patient', this.id);
+    this.medicineService.create(formData)
+    .subscribe(
+      response => {
+        this.medicines.push(data);
         this.toastr.success('Successfully Added', 'Success');
       }
     );
