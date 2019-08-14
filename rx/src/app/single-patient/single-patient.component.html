@@ -7,7 +7,15 @@
             <strong>Phone:</strong> {{ patient.phone }} <br>
             <strong>Email:</strong> {{ patient.email }} <br>
             <strong>Address:</strong> {{ patient.address }}
-            <div *ngFor="let e of encounters; index as i"> <strong>Encounter</strong> -{{ i+1 }} [{{ e.date }}]</div>
+
+            <div mat-list>
+                <a mat-list-item *ngFor="let e of encounters; index as i"
+                routerLink="/patients/{{id}}/"
+                [queryParams]="{ encounter: e.id }"
+                [class.active]="encounterId == e.id">
+                    <strong>Encounter-{{ i+1 }}</strong> [{{ e.date }}]
+                </a>
+            </div>
             <form #encounterForm="ngForm" (ngSubmit)="encounter(encounterForm.value)" class="example-form">
                 <mat-form-field class="example-full-width">
                     <mat-label>Visit Type</mat-label>
@@ -22,15 +30,21 @@
             </form>
         </div>
         <div class="col-md-8">
-            <div *ngFor="let n of advices">{{ n.advice }}</div>
-            {{ patient.advice }}
-            <form #adviceForm="ngForm" (ngSubmit)="advice(adviceForm.value)" class="example-form">
-                <mat-form-field class="example-full-width">
-                    <textarea matInput [(ngModel)]="patient.advice" name="advice" placeholder="Advice"></textarea>
-                </mat-form-field>
-
-                <button mat-raised-button color="primary">Submit</button>
-            </form>
+            <mat-tab-group>
+                <mat-tab label="First"> Content 1 </mat-tab>
+                <mat-tab label="Second"> Content 2 </mat-tab>
+                <mat-tab label="Advice">
+                    <div *ngFor="let n of advices">{{ n.advice }} {{ n.id }}</div>
+                    {{ patient.advice }}
+                    <form #adviceForm="ngForm" (ngSubmit)="advice(adviceForm.value)" class="example-form">
+                        <mat-form-field class="example-full-width">
+                            <textarea matInput [(ngModel)]="patient.advice" name="advice" placeholder="Advice"></textarea>
+                        </mat-form-field>
+        
+                        <button mat-raised-button color="primary">Submit</button>
+                    </form>
+                </mat-tab>
+            </mat-tab-group>
         </div>
     </div>
 </div>

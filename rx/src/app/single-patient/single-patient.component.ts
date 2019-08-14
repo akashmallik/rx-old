@@ -42,7 +42,9 @@ export class SinglePatientComponent implements OnInit {
   patient: Patient[] = [];
   advices: any[] = [];
   encounters: any[] = [];
-  id: any;
+  filteredEncounters: any[] = [];
+  public id: any;
+  public encounterId: any;
 
   visit: Visit[] = [
     { key: 'ODP', value: 'ODP'},
@@ -54,6 +56,11 @@ export class SinglePatientComponent implements OnInit {
     private encounterService: EncounterService,
     private toastr: ToastrService,
     private route: ActivatedRoute) {
+      route.queryParamMap.subscribe(
+        params => {
+          this.encounterId = params.get('encounter');
+        }
+      );
       this.id = this.route.snapshot.paramMap.get('id');
       this.patientService.get(this.id)
       .subscribe(
@@ -64,13 +71,13 @@ export class SinglePatientComponent implements OnInit {
       this.adviceService.getAll()
       .subscribe(
         (data: any[]) => {
-          this.advices = data;
+          this.advices = data.filter(p => p.patient == this.id);
         }
       );
       this.encounterService.getAll()
       .subscribe(
         (data: any[]) => {
-          this.encounters = data;
+          this.encounters = data.filter(p => p.patient == this.id);
         }
       );
     }
@@ -102,6 +109,16 @@ export class SinglePatientComponent implements OnInit {
         this.toastr.success('Successfully Added', 'Success');
       }
     );
+  }
+
+  deleteAdvice(id) {
+    this.adviceService.delete(id)
+    .subscribe(
+      data => {
+        this.toastr.success('Successfully Deleted', 'Success');
+      }
+    );
+
   }
 
 }
