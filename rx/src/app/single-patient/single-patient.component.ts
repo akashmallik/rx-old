@@ -5,6 +5,8 @@ import { AdviceService } from '../services/advice.service';
 import { EncounterService } from '../services/encounter.service';
 import { ToastrService } from 'ngx-toastr';
 import { MedicineService } from '../services/medicine.service';
+import { ExaminationService } from '../services/examination.service';
+import { SymptomService } from '../services/symptom.service';
 
 
 export interface Patient {
@@ -44,6 +46,8 @@ export class SinglePatientComponent implements OnInit {
   patient: Patient[] = [];
   advices: any[] = [];
   encounters: any[] = [];
+  symptoms: any[] = [];
+  public examination: any[] = [];
   public encount: any = [];
   medicines: any[] = [];
   public id: any;
@@ -58,6 +62,8 @@ export class SinglePatientComponent implements OnInit {
     private adviceService: AdviceService,
     private encounterService: EncounterService,
     private medicineService: MedicineService,
+    private examinationService: ExaminationService,
+    private symptomService: SymptomService,
     private toastr: ToastrService,
     private route: ActivatedRoute) {
       route.queryParamMap.subscribe(
@@ -82,6 +88,18 @@ export class SinglePatientComponent implements OnInit {
       .subscribe(
         (data: any[]) => {
           this.advices = data.filter(p => p.patient == this.id);
+        }
+      );
+      this.symptomService.getAll()
+      .subscribe(
+        (data: any[]) => {
+          this.symptoms = data.filter(p => p.patient == this.id);
+        }
+      );
+      this.examinationService.getAll()
+      .subscribe(
+        (data: any[]) => {
+          this.examination = data.find(p => p.patient == this.id);
         }
       );
       this.encounterService.getAll()
@@ -113,9 +131,22 @@ export class SinglePatientComponent implements OnInit {
       }
     );
   }
+  symptom(data) {
+    const formData: FormData = new FormData();
+    formData.append('symptom', data.symptom);
+    formData.append('patient', this.id);
+    this.symptomService.create(formData)
+    .subscribe(
+      response => {
+        this.symptoms.push(data);
+        this.toastr.success('Successfully Added', 'Success');
+      }
+    );
+  }
 
   encounter(data) {
     const formData: FormData = new FormData();
+    formData.append('date', data.date);
     formData.append('visit_type', data.visit_type);
     formData.append('patient', this.id);
     this.encounterService.create(formData)

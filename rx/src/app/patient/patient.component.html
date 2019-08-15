@@ -10,7 +10,7 @@
                     </div>
                     <div class="col-md-4">
                         <mat-form-field class="example-full-width">
-                            <input matInput [(ngModel)]="patient.age" name="age" placeholder="Age">
+                            <input matInput type="number" [(ngModel)]="patient.age" name="age" placeholder="Age">
                         </mat-form-field>
                     </div>
                 </div>
@@ -36,9 +36,9 @@
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
-                        <mat-form-field class="example-full-width">
-                            <input matInput [(ngModel)]="patient.avatar" name="avatar" placeholder="Avatar">
-                        </mat-form-field>
+                        <div class="example-full-width">
+                            <input type="file" [(ngModel)]="patient.avatar" name="avatar" placeholder="Avatar">
+                        </div>
                     </div>
                 </div>
                 <div class="row">

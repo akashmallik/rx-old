@@ -3,6 +3,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { PatientService } from '../services/patient.service';
+import { ToastrService } from 'ngx-toastr';
 
 export interface Patient {
   id: number;
@@ -24,7 +25,9 @@ let ELEMENTDATA: Patient[];
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private patientService: PatientService) {
+  constructor(
+    private patientService: PatientService,
+    private toastr: ToastrService) {
     this.patientService.getAll()
     .subscribe(
       (data: Patient[]) => {
@@ -55,7 +58,7 @@ export class HomeComponent implements OnInit {
     this.patientService.delete(id)
     .subscribe(
       data => {
-        alert('Successfully Deleted!');
+        this.toastr.success('Successfully Deleted', 'Success');
       }
     );
   }
