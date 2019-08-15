@@ -16,12 +16,12 @@ class EncounterViewSet(viewsets.ModelViewSet):
     serializer_class = EncounterSerializer
 
 class AdviceViewSet(viewsets.ModelViewSet):
-    lookup_field = "advice_id"
+    # lookup_field = "advice_id"
     queryset = Advice.objects.all()
     serializer_class = AdviceSerializer
 
 class MedicineViewSet(viewsets.ModelViewSet):
-    lookup_field = "medicine_id"
+    # lookup_field = "medicine_id"
     queryset = Medicine.objects.all()
     serializer_class = MedicineSerializer
 

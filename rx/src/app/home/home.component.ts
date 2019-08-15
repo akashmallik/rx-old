@@ -16,7 +16,6 @@ export interface Patient {
   blood_group: string;
   avatar: string;
 }
-let ELEMENTDATA: Patient[];
 
 @Component({
   selector: 'app-home',
@@ -24,14 +23,24 @@ let ELEMENTDATA: Patient[];
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  displayedColumns: string[] = ['name', 'age', 'phone', 'address', 'action'];
+  dataSource: MatTableDataSource<Patient>;
+
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(
     private patientService: PatientService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService) {}
+
+  ngOnInit() {
     this.patientService.getAll()
     .subscribe(
-      (data: Patient[]) => {
-        ELEMENTDATA = data;
+      (response: Patient[]) => {
+        this.dataSource = new MatTableDataSource<Patient>(response);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource._updateChangeSubscription();
       },
       error => {
         console.log(error);
@@ -39,25 +48,17 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-
-  displayedColumns: string[] = ['name', 'age', 'phone', 'address', 'action'];
-  dataSource = new MatTableDataSource<Patient>(ELEMENTDATA);
-
-  ngOnInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-  }
-
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  delete(id) {
-    this.patientService.delete(id)
+  delete(item) {
+    const index = this.dataSource.data.indexOf(item);
+    this.patientService.delete(item.id)
     .subscribe(
       data => {
+        this.dataSource.data.splice(index, 1);
+        this.dataSource._updateChangeSubscription();
         this.toastr.success('Successfully Deleted', 'Success');
       }
     );

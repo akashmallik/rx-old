@@ -13,9 +13,6 @@
                     <strong>Email:</strong> {{ patient.email }} <br>
                     <strong>Address:</strong> {{ patient.address }}
                 </mat-card-content>
-                <!-- <mat-card-actions>
-                    <button mat-button>LIKE</button>
-                </mat-card-actions> -->
             </mat-card>
             <mat-card class="mt-3">
                 Encounters
@@ -33,13 +30,13 @@
             <div class="mat-elevation-z8">
             </div>
 
-            <form #encounterForm="ngForm" (ngSubmit)="encounter(encounterForm.value)" class="example-form">
-                <mat-form-field class="example-full-width">
+            <form #encounterForm="ngForm" (ngSubmit)="encounter(encounterForm.value)" class="form">
+                <mat-form-field class="form-field">
                     <input matInput [matDatepicker]="picker" ngModel name="date" placeholder="Choose a date">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="form-field">
                     <mat-label>Visit Type</mat-label>
                     <mat-select ngModel name="visit_type">
                         <mat-option *ngFor="let v of visit" [value]="v.key">
@@ -54,39 +51,48 @@
         <div class="col-md-9">
             <mat-tab-group>
                 <mat-tab label="C/C">
-                    <div *ngFor="let s of symptoms">{{ s.symptom }}</div>
-                    <form #symptomForm="ngForm" (ngSubmit)="symptom(symptomForm.value); symptomForm.reset()" class="example-form">
-                        <mat-form-field class="example-full-width">
+                    <mat-list>
+                        <mat-list-item *ngFor="let s of symptoms"> {{ s.symptom }}
+                        </mat-list-item>
+                    </mat-list>
+                    <form #symptomForm="ngForm" (ngSubmit)="symptom(symptomForm.value); symptomForm.reset()" class="form">
+                        <mat-form-field class="form-field">
                             <textarea matInput ngModel name="symptom" placeholder="Symptom"></textarea>
                         </mat-form-field>
-        
-                        <button mat-raised-button color="primary">Submit</button>
+                        <button mat-raised-button color="primary">Add</button>
                     </form>
                 </mat-tab>
-                <mat-tab label="examination"> 
-                    {{ examination }}
-                </mat-tab>
-                <mat-tab label="C/C"> 
-                    {{ encount.id }} {{ encount.date }}
+                <mat-tab label="Examination">
+                    <div *ngIf="examination">
+                        <strong>Pulse:</strong> {{ examination.pulse }} <br>
+                        <strong>BP:</strong> {{ examination.bp }} <br>
+                        <strong>temp:</strong> {{ examination.temp }} <br>
+                        <strong>resp_rate:</strong> {{ examination.resp_rate }} <br>
+                        <strong>height:</strong> {{ examination.height }} <br>
+                        <strong>lifestyle:</strong> {{ examination.lifestyle }}
+                    </div> 
                 </mat-tab>
                 <mat-tab label="Medicine">
-                    <div *ngFor="let n of medicines">{{ n.medicine }}</div>
-                    <form #medicineForm="ngForm" (ngSubmit)="medicine(medicineForm.value); medicineForm.reset()" class="example-form">
-                        <mat-form-field class="example-full-width">
-                            <textarea matInput ngModel name="medicine" placeholder="medicine"></textarea>
+                    <div *ngFor="let n of encount.medicines">{{ medicines[n-1].medicine }}</div>
+                    <form #medicineForm="ngForm" (ngSubmit)="medicine(medicineForm.value); medicineForm.reset()" class="form">
+                        <mat-form-field class="form-field">
+                            <mat-label>Medicine</mat-label>
+                            <mat-select ngModel name="medicines" multiple>
+                              <mat-option *ngFor="let topping of medicines" [value]="topping.id">{{topping.medicine}}</mat-option>
+                            </mat-select>
                         </mat-form-field>
-        
-                        <button mat-raised-button color="primary">Submit</button>
+                        <button mat-raised-button color="primary">Add</button>
                     </form>
                 </mat-tab>
                 <mat-tab label="Advice">
-                    <div *ngFor="let n of advices">{{ n.advice }}</div>
-                    <form #adviceForm="ngForm" (ngSubmit)="advice(adviceForm.value); adviceForm.reset()" class="example-form">
-                        <mat-form-field class="example-full-width">
-                            <textarea matInput [(ngModel)]="patient.advice" name="advice" placeholder="Advice"></textarea>
+                    <mat-list>
+                        <mat-list-item *ngFor="let n of advices"> {{ n.advice }} </mat-list-item>
+                    </mat-list>
+                    <form #adviceForm="ngForm" (ngSubmit)="advice(adviceForm.value); adviceForm.reset()" class="form">
+                        <mat-form-field class="form-field">
+                            <textarea matInput ngModel name="advice" placeholder="Advice"></textarea>
                         </mat-form-field>
-        
-                        <button mat-raised-button color="primary">Submit</button>
+                        <button mat-raised-button color="primary">Add</button>
                     </form>
                 </mat-tab>
             </mat-tab-group>

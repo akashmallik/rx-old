@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MedicineService } from '../services/medicine.service';
 import { ExaminationService } from '../services/examination.service';
 import { SymptomService } from '../services/symptom.service';
+import {FormControl} from '@angular/forms';
 
 
 export interface Patient {
@@ -47,16 +48,16 @@ export class SinglePatientComponent implements OnInit {
   advices: any[] = [];
   encounters: any[] = [];
   symptoms: any[] = [];
-  public examination: any[] = [];
-  public encount: any = [];
+  examination: any[] = [];
+  encount: any[] = [];
   medicines: any[] = [];
-  public id: any;
-  public encounterId: any;
+  id: any;
+  encounterId: any;
 
   visit: Visit[] = [
     { key: 'ODP', value: 'ODP'},
   ];
-
+  displayedColumns: string[] = ['position'];
   constructor(
     private patientService: PatientService,
     private adviceService: AdviceService,
@@ -69,12 +70,14 @@ export class SinglePatientComponent implements OnInit {
       route.queryParamMap.subscribe(
         params => {
           this.encounterId = params.get('encounter');
-          this.encounterService.get(this.encounterId)
-          .subscribe(
-            (data: any[]) => {
-              this.encount =  data;
-            }
-          );
+          if (this.encounterId) {
+            this.encounterService.get(this.encounterId)
+            .subscribe(
+              (data: any[]) => {
+                this.encount =  data;
+              }
+            );
+          }
         }
       );
       this.id = this.route.snapshot.paramMap.get('id');
@@ -158,10 +161,12 @@ export class SinglePatientComponent implements OnInit {
     );
   }
   medicine(data) {
+    var json_arr = JSON.stringify(data.medicine);
     const formData: FormData = new FormData();
-    formData.append('medicine', data.medicine);
-    // formData.append('patient', this.id);
-    this.medicineService.create(formData)
+    formData.append('medicines[]', data.medicine);
+    formData.append('patient', this.id);
+    // formData.append('id', this.encounterId);
+    this.encounterService.update(this.encounterId, data)
     .subscribe(
       response => {
         this.medicines.push(data);
@@ -177,7 +182,5 @@ export class SinglePatientComponent implements OnInit {
         this.toastr.success('Successfully Deleted', 'Success');
       }
     );
-
   }
-
 }

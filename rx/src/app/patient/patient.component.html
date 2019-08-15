@@ -5,12 +5,14 @@
                 <div class="row">
                     <div class="col-md-8">
                         <mat-form-field class="example-full-width">
-                            <input matInput [(ngModel)]="patient.name" name="name" placeholder="Patient Name">
+                            <input matInput [(ngModel)]="patient.name" #name="ngModel" name="name" placeholder="Patient Name" required>
+                            <mat-error *ngIf="name.touched && name.invalid">The <strong>name</strong> field is required.</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
                         <mat-form-field class="example-full-width">
-                            <input matInput type="number" [(ngModel)]="patient.age" name="age" placeholder="Age">
+                            <input matInput type="number" [(ngModel)]="patient.age" #age="ngModel" name="age" placeholder="Age" required>
+                            <mat-error *ngIf="age.touched && age.invalid">The <strong>age</strong> field is required.</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -18,11 +20,12 @@
                     <div class="col-md-4">
                         <mat-form-field class="example-full-width">
                             <mat-label>Sex</mat-label>
-                            <mat-select [(ngModel)]="patient.sex" name="sex">
+                            <mat-select [(ngModel)]="patient.sex" #sex="ngModel" name="sex" required>
                                 <mat-option *ngFor="let s of sex" [value]="s.key">
                                 {{ s.value }}
                                 </mat-option>
                             </mat-select>
+                            <mat-error *ngIf="sex.touched && sex.invalid">The <strong>sex</strong> field is required.</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
@@ -37,14 +40,15 @@
                     </div>
                     <div class="col-md-4">
                         <div class="example-full-width">
-                            <input type="file" [(ngModel)]="patient.avatar" name="avatar" placeholder="Avatar">
+                            <input type="file" ngModel name="avatar" placeholder="Avatar">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <mat-form-field class="example-full-width">
-                            <input matInput [(ngModel)]="patient.phone" name="phone" placeholder="Phone">
+                            <input matInput [(ngModel)]="patient.phone" #phone="ngModel" name="phone" placeholder="Phone" required>
+                            <mat-error *ngIf="phone.touched && phone.invalid">The <strong>phone</strong> field is required.</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-md-6">

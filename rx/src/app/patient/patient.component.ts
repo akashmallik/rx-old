@@ -54,7 +54,8 @@ export class PatientComponent implements OnInit {
     private toastr: ToastrService,
     private route: ActivatedRoute ) {
       this.id = this.route.snapshot.paramMap.get('id');
-      if (this.id) {
+      console.log(this.id);
+      if (this.id !== null) {
         this.patientService.get(this.id)
         .subscribe(
           (data: Patient[]) => {

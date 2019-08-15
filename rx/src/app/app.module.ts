@@ -28,6 +28,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SinglePatientComponent } from './single-patient/single-patient.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MedicineComponent } from './medicine/medicine.component';
+
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     PatientComponent,
     HomeComponent,
     NavbarComponent,
-    SinglePatientComponent
+    SinglePatientComponent,
+    MedicineComponent
   ],
   imports: [
     BrowserModule,

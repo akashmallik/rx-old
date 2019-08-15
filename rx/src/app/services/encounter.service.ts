@@ -19,7 +19,7 @@ export class EncounterService {
     return this.http.post(this.configUrl, resource);
   }
   update(id, resource) {
-    return this.http.put(this.configUrl + id + '/', resource);
+    return this.http.patch(this.configUrl + id + '/', resource);
   }
   delete(id) {
     return this.http.delete(this.configUrl + id + '/');
