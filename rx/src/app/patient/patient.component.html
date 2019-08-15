@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            <form #heroForm="ngForm" (ngSubmit)="save(heroForm.value)" class="example-form">
+            <form #patientForm="ngForm" (ngSubmit)="save(patientForm.value)" class="example-form">
                 <div class="row">
                     <div class="col-md-8">
                         <mat-form-field class="example-full-width">
@@ -20,12 +20,12 @@
                     <div class="col-md-4">
                         <mat-form-field class="example-full-width">
                             <mat-label>Sex</mat-label>
-                            <mat-select [(ngModel)]="patient.sex" #sex="ngModel" name="sex" required>
+                            <mat-select [(ngModel)]="patient.sex" name="sex">
+                                <!-- <mat-option *ngFor="let s of sex | keyvalue" [value]="s.key"> -->
                                 <mat-option *ngFor="let s of sex" [value]="s.key">
                                 {{ s.value }}
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="sex.touched && sex.invalid">The <strong>sex</strong> field is required.</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
@@ -40,20 +40,23 @@
                     </div>
                     <div class="col-md-4">
                         <div class="example-full-width">
-                            <input type="file" ngModel name="avatar" placeholder="Avatar">
+                            <input type="file" [(ngModel)]="patient.avatar" name="avatar" (change)="onFileSelected($event)" placeholder="Avatar">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <mat-form-field class="example-full-width">
-                            <input matInput [(ngModel)]="patient.phone" #phone="ngModel" name="phone" placeholder="Phone" required>
+                            <input matInput [(ngModel)]="patient.phone" #phone="ngModel" phone="CN" name="phone" placeholder="Phone" required>
                             <mat-error *ngIf="phone.touched && phone.invalid">The <strong>phone</strong> field is required.</mat-error>
+                            <mat-error *ngIf="phone.errors?.phone">error message</mat-error>
+
                         </mat-form-field>
                     </div>
                     <div class="col-md-6">
                         <mat-form-field class="example-full-width">
-                            <input matInput [(ngModel)]="patient.email" name="email" placeholder="Email">
+                            <input matInput [(ngModel)]="patient.email" #email="ngModel" name="email" placeholder="Email" email>
+                            <mat-error *ngIf="email.errors?.email">Please enter a valid email.</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -61,14 +64,25 @@
                     <textarea matInput [(ngModel)]="patient.address" name="address" placeholder="Address"></textarea>
                 </mat-form-field>
 
-                <button mat-raised-button color="primary">Submit</button>
+                <button mat-raised-button [disabled]="patientForm.invalid" color="primary">Submit</button>
             </form>
     
         </div>
         <div class="col-md-4">
-            <img [src]="patient.avatar" alt="">
-            <h4>{{ patient.name }}</h4>
-            <h4>{{ patient.address }}</h4>
+            <mat-card class="example-card">
+                <mat-card-header>
+                    <div mat-card-avatar class="example-header-image"></div>
+                    <mat-card-title>{{ patient.name }}</mat-card-title>
+                    <mat-card-subtitle><strong>Sex:</strong> {{ patient.sex }} <strong>Age:</strong> {{ patient.age }}</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image [src]="patient.avatar" alt="{{ patient.name }}">
+                <mat-card-content>
+                    <strong>Blood Group:</strong> {{ patient.blood_group }} <br>
+                    <strong>Phone:</strong> {{ patient.phone }} <br>
+                    <strong>Email:</strong> {{ patient.email }} <br>
+                    <strong>Address:</strong> {{ patient.address }}
+                </mat-card-content>
+            </mat-card>
     
         </div>
     </div>

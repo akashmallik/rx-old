@@ -29,6 +29,7 @@ export interface Blood {
   styleUrls: ['./patient.component.scss']
 })
 export class PatientComponent implements OnInit {
+  private selectedFile = null;
   patient: Patient[] = [];
   id: any;
 
@@ -68,6 +69,12 @@ export class PatientComponent implements OnInit {
   ngOnInit() {
   }
 
+  onFileSelected(event) {
+    this.selectedFile = event.target.files[0];
+    console.log(this.selectedFile);
+    // this.patient.[avatar] = this.selectedFile;
+  }
+
   save(value) {
     const formData: FormData = new FormData();
     formData.append('name', value.name);
@@ -77,7 +84,9 @@ export class PatientComponent implements OnInit {
     formData.append('phone', value.phone);
     formData.append('email', value.email);
     formData.append('address', value.address);
-    // formData.append('avatar', this.fileToUpload, this.fileToUpload.name);
+    if (this.selectedFile) {
+      formData.append('avatar', this.selectedFile, this.selectedFile.name);
+    }
 
     if (this.id) {
       this.patientService.update(this.id, formData)
