@@ -19,6 +19,8 @@ import {MatListModule} from '@angular/material/list';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,6 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SinglePatientComponent } from './single-patient/single-patient.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MedicineComponent } from './medicine/medicine.component';
+import { MedicineDialogComponent } from './medicine-dialog/medicine-dialog.component';
 
 
 @NgModule({
@@ -38,7 +41,8 @@ import { MedicineComponent } from './medicine/medicine.component';
     HomeComponent,
     NavbarComponent,
     SinglePatientComponent,
-    MedicineComponent
+    MedicineComponent,
+    MedicineDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -64,8 +68,13 @@ import { MedicineComponent } from './medicine/medicine.component';
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatDialogModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    // { provide: MatDialogRef, useValue: {} },
+    // { provide: MAT_DIALOG_DATA, useValue: [] },
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [MedicineDialogComponent]
 })
 export class AppModule { }

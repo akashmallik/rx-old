@@ -1,9 +1,10 @@
 <div class="container">
+    <button mat-raised-button color="primary" (click)="openDialog()">Add Medicine</button>
     <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
     <div class="mat-elevation-z8">
-        <table #myTable mat-table matSort [dataSource]="dataSource">
+        <table mat-table matSort [dataSource]="dataSource">
     
             <!-- Name Column -->
             <ng-container matColumnDef="medicine">
@@ -16,12 +17,9 @@
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
                 <td mat-cell *matCellDef="let element">
-                    <!-- <a mat-raised-button color="primary" class="mr-2" routerLink="patients/{{element.id}}">
-                        <i class="material-icons">visibility</i>
-                    </a>
-                    <a mat-raised-button color="accent" class="mr-2" routerLink="patients/edit/{{element.id}}">
+                    <button mat-raised-button color="accent" (click)="openDialog(element)">
                         <i class="material-icons">edit</i>
-                    </a> -->
+                    </button>
                     <button mat-raised-button color="warn" (click)="delete(element)">
                         <i class="material-icons">delete</i>
                     </button>
@@ -34,8 +32,8 @@
         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
     </div>
 
-    <form #medicineForm="ngForm" (ngSubmit)="medicine(medicineForm.value); medicineForm.reset()" class="form">
-        <mat-form-field class="form-field">
+    <form #medicineForm="ngForm" (ngSubmit)="medicine(medicineForm.value); medicineForm.reset()" class="mat-form">
+        <mat-form-field class="mat-form-field">
             <textarea matInput ngModel name="medicine" placeholder="Medicine"></textarea>
         </mat-form-field>
         <button mat-raised-button color="primary">Add</button>

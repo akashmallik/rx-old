@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort} from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MedicineService } from '../services/medicine.service';
 import { ToastrService } from 'ngx-toastr';
-import { MatTable } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MedicineDialogComponent } from '../medicine-dialog/medicine-dialog.component';
 
 export interface Medicine {
   id: number;
@@ -21,13 +22,13 @@ export class MedicineComponent implements OnInit {
   displayedColumns: string[] = ['medicine', 'action'];
   dataSource: MatTableDataSource<Medicine>;
 
-  @ViewChild('myTable', {static: true}) myTable: MatTable<any>;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-
   constructor(
     private medicineService: MedicineService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    public dialog: MatDialog) {
+  }
 
   ngOnInit() {
     this.medicineService.getAll()
@@ -48,18 +49,28 @@ export class MedicineComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  medicine(data) {
-    this.medicineService.create(data)
-    .subscribe(
-      response => {
-        this.dataSource.data.push(data);
-        // this.dataSource.data = this.dataSource.data.slice();
-        // this.myTable.renderRows();
-        this.dataSource._updateChangeSubscription();
-        this.toastr.success('Successfully Added', 'Success');
+  openDialog(elementdata) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = elementdata;
+
+    const dialogRef = this.dialog.open(MedicineDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      data => {
+        this.medicineService.create(data)
+        .subscribe(
+          response => {
+            this.dataSource.data.push(data);
+            this.dataSource._updateChangeSubscription();
+            this.toastr.success('Successfully Added', 'Success');
+          }
+        );
       }
     );
-
   }
 
   delete(item) {
