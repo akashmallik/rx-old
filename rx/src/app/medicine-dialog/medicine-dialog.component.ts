@@ -10,9 +10,7 @@ export class MedicineDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<MedicineDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data) {
-      console.log(data);
-  }
+    @Inject(MAT_DIALOG_DATA) public data) { }
 
   ngOnInit() {
   }

@@ -1,10 +1,7 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort} from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MedicineService } from '../services/medicine.service';
 import { ToastrService } from 'ngx-toastr';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { MedicineDialogComponent } from '../medicine-dialog/medicine-dialog.component';
 
 export interface Medicine {
@@ -24,10 +21,11 @@ export class MedicineComponent implements OnInit {
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
   constructor(
     private medicineService: MedicineService,
-    private toastr: ToastrService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -35,7 +33,7 @@ export class MedicineComponent implements OnInit {
     .subscribe(
       (data: Medicine[]) => {
         this.dataSource = new MatTableDataSource<Medicine>(data);
-        this.dataSource._updateChangeSubscription();
+        // this.dataSource._updateChangeSubscription();
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       },
@@ -49,26 +47,41 @@ export class MedicineComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openDialog(elementdata) {
+  openDialog(elementdata?: any) {
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = true;
+    dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
+    dialogConfig.width = '40%';
 
-    dialogConfig.data = elementdata;
+    if (elementdata) {
+      dialogConfig.data = elementdata;
+    } else {
+      dialogConfig.data = [];
+    }
 
     const dialogRef = this.dialog.open(MedicineDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
       data => {
-        this.medicineService.create(data)
-        .subscribe(
-          response => {
-            this.dataSource.data.push(data);
-            this.dataSource._updateChangeSubscription();
-            this.toastr.success('Successfully Added', 'Success');
-          }
-        );
+        if (data.id) {
+          this.medicineService.update(data.id, data)
+          .subscribe(
+            response => {
+              this.dataSource._updateChangeSubscription();
+              this.toastr.success('Successfully Updated', 'Success');
+            }
+          );
+        } else {
+          this.medicineService.create(data)
+          .subscribe(
+            response => {
+              this.dataSource.data.push(data);
+              this.dataSource._updateChangeSubscription();
+              this.toastr.success('Successfully Added', 'Success');
+            }
+          );
+        }
       }
     );
   }
@@ -84,6 +97,5 @@ export class MedicineComponent implements OnInit {
       }
     );
   }
-
 
 }

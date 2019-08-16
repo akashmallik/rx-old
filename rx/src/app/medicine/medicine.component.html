@@ -17,7 +17,7 @@
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-raised-button color="accent" (click)="openDialog(element)">
+                    <button mat-raised-button color="accent" class="mr-2" (click)="openDialog(element)">
                         <i class="material-icons">edit</i>
                     </button>
                     <button mat-raised-button color="warn" (click)="delete(element)">
@@ -31,11 +31,4 @@
         </table>
         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
     </div>
-
-    <form #medicineForm="ngForm" (ngSubmit)="medicine(medicineForm.value); medicineForm.reset()" class="mat-form">
-        <mat-form-field class="mat-form-field">
-            <textarea matInput ngModel name="medicine" placeholder="Medicine"></textarea>
-        </mat-form-field>
-        <button mat-raised-button color="primary">Add</button>
-    </form>
 </div>
