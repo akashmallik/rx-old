@@ -15,6 +15,10 @@ export class MedicineDialogComponent implements OnInit {
   ngOnInit() {
   }
 
+  cancel(): void {
+    this.dialogRef.close();
+  }
+
   save(value) {
     this.dialogRef.close(value);
   }

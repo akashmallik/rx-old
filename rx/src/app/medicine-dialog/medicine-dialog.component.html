@@ -2,7 +2,8 @@
 <mat-dialog-content>
     <form #medicineForm="ngForm" class="mat-form">
         <mat-form-field class="mat-form-field">
-            <textarea matInput [(ngModel)]="data.medicine" name="medicine" placeholder="Medicine"></textarea>
+            <input matInput [(ngModel)]="data.medicine" #medicine="ngModel" name="medicine" placeholder="Medicine" required>
+            <mat-error *ngIf="medicine.touched && medicine.invalid">The <strong>medicine</strong> field is required.</mat-error>
         </mat-form-field>
         <mat-form-field class="mat-form-field">
             <input matInput [(ngModel)]="data.id" readonly name="id" placeholder="id">
@@ -10,6 +11,6 @@
     </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat--dialogclose>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="save(medicineForm.value)">{{ data.length === 0 ? 'Add' : 'Update'}}</button>
+  <button mat-raised-button color="warn" mat--dialogclose (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" [disabled]="medicineForm.invalid" (click)="save(medicineForm.value)">{{ data.length === 0 ? 'Add' : 'Update'}}</button>
 </mat-dialog-actions>

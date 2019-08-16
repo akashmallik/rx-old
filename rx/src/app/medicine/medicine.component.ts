@@ -50,7 +50,7 @@ export class MedicineComponent implements OnInit {
   openDialog(elementdata?: any) {
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = false;
+    dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '40%';
 
@@ -64,23 +64,25 @@ export class MedicineComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
       data => {
-        if (data.id) {
-          this.medicineService.update(data.id, data)
-          .subscribe(
-            response => {
-              this.dataSource._updateChangeSubscription();
-              this.toastr.success('Successfully Updated', 'Success');
-            }
-          );
-        } else {
-          this.medicineService.create(data)
-          .subscribe(
-            response => {
-              this.dataSource.data.push(data);
-              this.dataSource._updateChangeSubscription();
-              this.toastr.success('Successfully Added', 'Success');
-            }
-          );
+        if (data) {
+          if (data.id) {
+            this.medicineService.update(data.id, data)
+            .subscribe(
+              response => {
+                this.dataSource._updateChangeSubscription();
+                this.toastr.success('Successfully Updated', 'Success');
+              }
+            );
+          } else {
+            this.medicineService.create(data)
+            .subscribe(
+              response => {
+                this.dataSource.data.push(data);
+                this.dataSource._updateChangeSubscription();
+                this.toastr.success('Successfully Added', 'Success');
+              }
+            );
+          }
         }
       }
     );
