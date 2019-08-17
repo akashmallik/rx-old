@@ -44,12 +44,12 @@ export class MedicineComponent implements OnInit {
   }
 
   public errorHandler(response) {
-    this.errors = response.error.errors;
-    if (this.errors) {
+    console.log(response);
+    if (Array.isArray(response.error)) {
+      this.errors = response.error;
       for (const error in this.errors) {
         if (this.errors.hasOwnProperty(error)) {
-          const element = this.errors[error];
-          this.toastr.warning(this.errors[error], 'Warning');
+          this.toastr.warning(error.toUpperCase() + ': ' + this.errors[error], 'Warning');
         }
       }
     } else {

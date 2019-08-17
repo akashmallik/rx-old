@@ -3,7 +3,7 @@
         <div class="col-md-3">
             <mat-card class="example-card">
                 <mat-card-header>
-                    <div mat-card-avatar class="example-header-image"></div>
+                    <div mat-card-avatar [ngStyle]="{ 'background-image': 'url(' + patient.avatar + ')', 'background-size': 'cover'}"></div>
                     <mat-card-title>{{ patient.name }}</mat-card-title>
                     <mat-card-subtitle><strong>Sex:</strong> {{ patient.sex }} <strong>Age:</strong> {{ patient.age }}</mat-card-subtitle>
                 </mat-card-header>
@@ -31,7 +31,7 @@
             </div>
 
             <form #encounterForm="ngForm" (ngSubmit)="encounter(encounterForm.value)" class="mat-form">
-                <mat-form-field class="mat-form-field">
+                <mat-form-field class="mat-form-field" hidden="true">
                     <input matInput [matDatepicker]="picker" ngModel name="date" placeholder="Choose a date">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
@@ -52,15 +52,30 @@
             <mat-tab-group>
                 <mat-tab label="C/C">
                     <mat-list>
-                        <mat-list-item *ngFor="let s of symptoms"> {{ s.symptom }}
+                        <mat-list-item *ngFor="let s of symptoms">
+                            <h4 matLine>{{ s.symptom }}</h4> 
+                            <button mat-icon-button color="warn" (click)="sigleSymptom(s)">
+                                <i class="material-icons">edit</i>
+                            </button>
+                            <button mat-icon-button color="warn" (click)="deleteSymptom(s)">
+                                <i class="material-icons">delete</i>
+                            </button>
                         </mat-list-item>
                     </mat-list>
                     <form #symptomForm="ngForm" (ngSubmit)="symptom(symptomForm.value); symptomForm.reset()" class="mat-form">
-                        <mat-form-field class="mat-form-field">
-                            <textarea matInput ngModel name="symptom" placeholder="Symptom"></textarea>
+                        <mat-form-field class="mat-form-field" hidden>
+                            <textarea matInput [(ngModel)]="symp.id" name="id" placeholder="Id"></textarea>
                         </mat-form-field>
-                        <button mat-raised-button color="primary">Add</button>
+                        <mat-form-field class="mat-form-field" hidden>
+                            <textarea matInput [(ngModel)]="symp.patient" name="patient" placeholder="Patient"></textarea>
+                        </mat-form-field>
+                        <mat-form-field class="mat-form-field">
+                            <textarea matInput [(ngModel)]="symp.symptom" name="symptom" placeholder="Symptom"></textarea>
+                        </mat-form-field>
+                        <button mat-raised-button type="button" color="warn" (click)="symptomForm.reset(); symp = []" class="mr-2">Reset</button>
+                        <button mat-raised-button color="primary">{{ symp.length !== undefined ? 'Add' : 'Update' }}</button>
                     </form>
+                    
                 </mat-tab>
                 <mat-tab label="Examination">
                     <div *ngIf="examination">
@@ -86,7 +101,12 @@
                 </mat-tab>
                 <mat-tab label="Advice">
                     <mat-list>
-                        <mat-list-item *ngFor="let n of advices"> {{ n.advice }} </mat-list-item>
+                        <mat-list-item *ngFor="let a of advices">
+                            <h4 matLine>{{ a.advice }}</h4> 
+                            <button mat-icon-button color="warn" (click)="deleteAdvice(a)">
+                                <i class="material-icons">delete</i>
+                            </button>
+                        </mat-list-item>
                     </mat-list>
                     <form #adviceForm="ngForm" (ngSubmit)="advice(adviceForm.value); adviceForm.reset()" class="mat-form">
                         <mat-form-field class="mat-form-field">

@@ -54,13 +54,13 @@ export class PatientComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private route: ActivatedRoute ) {
-      this.id = this.route.snapshot.paramMap.get('id');
-      console.log(this.id);
-      if (this.id !== null) {
+      this.id = +this.route.snapshot.paramMap.get('id');
+      if (this.id) {
         this.patientService.get(this.id)
         .subscribe(
           (data: Patient[]) => {
             this.patient = data;
+            console.log(data);
           }
         );
       }
@@ -71,8 +71,6 @@ export class PatientComponent implements OnInit {
 
   onFileSelected(event) {
     this.selectedFile = event.target.files[0];
-    console.log(this.selectedFile);
-    // this.patient.[avatar] = this.selectedFile;
   }
 
   save(value) {

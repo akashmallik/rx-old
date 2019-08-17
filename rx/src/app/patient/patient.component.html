@@ -40,7 +40,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="mat-form-field">
-                            <input type="file" [(ngModel)]="patient.avatar" name="avatar" (change)="onFileSelected($event)" placeholder="Avatar">
+                            <input type="file" ngModel name="avatar" (change)="onFileSelected($event)" placeholder="Avatar">
                         </div>
                     </div>
                 </div>
@@ -69,9 +69,9 @@
     
         </div>
         <div class="col-md-4">
-            <mat-card class="example-card">
+            <mat-card class="example-card" *ngIf="patient != undefined">
                 <mat-card-header>
-                    <div mat-card-avatar class="example-header-image"></div>
+                    <div mat-card-avatar [ngStyle]="{ 'background-image': 'url(' + patient.avatar + ')', 'background-size': 'cover'}"></div>
                     <mat-card-title>{{ patient.name }}</mat-card-title>
                     <mat-card-subtitle><strong>Sex:</strong> {{ patient.sex }} <strong>Age:</strong> {{ patient.age }}</mat-card-subtitle>
                 </mat-card-header>
