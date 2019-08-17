@@ -38,21 +38,26 @@ export class MedicineComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       },
       error => {
-        this.errorHandling(error);
+        this.errorHandler(error);
       }
     );
   }
 
-  public errorHandling(response) {
+  public errorHandler(response) {
     this.errors = response.error.errors;
     if (this.errors) {
       for (const error in this.errors) {
         if (this.errors.hasOwnProperty(error)) {
           const element = this.errors[error];
+          this.toastr.warning(this.errors[error], 'Warning');
         }
       }
     } else {
-      this.toastr.error(response.message, 'Error');
+      if (response.status === 404) {
+        this.toastr.warning('Not Found!', '404');
+      } else {
+        this.toastr.error(response.message, 'Error');
+      }
     }
   }
 
@@ -86,7 +91,7 @@ export class MedicineComponent implements OnInit {
                 this.toastr.success('Successfully Updated', 'Success');
               },
               error => {
-                this.errorHandling(error);
+                this.errorHandler(error);
               }
             );
           } else {
@@ -99,9 +104,7 @@ export class MedicineComponent implements OnInit {
                 this.toastr.success('Successfully Added', 'Success');
               },
               error => {
-                console.log(error);
-                
-                this.errorHandling(error);
+                this.errorHandler(error);
               }
             );
           }
@@ -120,7 +123,8 @@ export class MedicineComponent implements OnInit {
         this.toastr.success('Successfully Deleted', 'Success');
       },
       error => {
-        this.errorHandling(error);
+        console.log(error);
+        this.errorHandler(error);
       }
     );
   }
