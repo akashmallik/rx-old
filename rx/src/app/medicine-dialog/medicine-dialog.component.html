@@ -1,12 +1,12 @@
-<h2 mat-dialog-title>{{ data.length === 0 ? 'Add' : 'Update'}} Medicine</h2>
+<h2 mat-dialog-title>{{ data.length !== undefined ? 'Add' : 'Update'}} Medicine</h2>
 <mat-dialog-content>
     <form #medicineForm="ngForm" class="mat-form">
         <mat-form-field class="mat-form-field">
             <input matInput [(ngModel)]="data.medicine" #medicine="ngModel" name="medicine" placeholder="Medicine" required>
             <mat-error *ngIf="medicine.touched && medicine.invalid">The <strong>medicine</strong> field is required.</mat-error>
         </mat-form-field>
-        <mat-form-field class="mat-form-field">
-            <input matInput [(ngModel)]="data.id" readonly name="id" placeholder="id">
+        <mat-form-field class="mat-form-field" hidden="true">
+            <input matInput [(ngModel)]="data.id" name="id" placeholder="id">
         </mat-form-field>
     </form>
 </mat-dialog-content>

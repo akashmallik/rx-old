@@ -16,6 +16,8 @@ export interface Medicine {
 })
 
 export class MedicineComponent implements OnInit {
+  private errors: any[] = [];
+
   displayedColumns: string[] = ['medicine', 'action'];
   dataSource: MatTableDataSource<Medicine>;
 
@@ -25,22 +27,33 @@ export class MedicineComponent implements OnInit {
   constructor(
     private medicineService: MedicineService,
     public dialog: MatDialog,
-    private toastr: ToastrService) {
-  }
+    private toastr: ToastrService) { }
 
   ngOnInit() {
     this.medicineService.getAll()
     .subscribe(
       (data: Medicine[]) => {
         this.dataSource = new MatTableDataSource<Medicine>(data);
-        // this.dataSource._updateChangeSubscription();
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       },
       error => {
-        console.log(error);
+        this.errorHandling(error);
       }
     );
+  }
+
+  public errorHandling(response) {
+    this.errors = response.error.errors;
+    if (this.errors) {
+      for (const error in this.errors) {
+        if (this.errors.hasOwnProperty(error)) {
+          const element = this.errors[error];
+        }
+      }
+    } else {
+      this.toastr.error(response.message, 'Error');
+    }
   }
 
   applyFilter(filterValue: string) {
@@ -52,7 +65,7 @@ export class MedicineComponent implements OnInit {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
+    // dialogConfig.width = '60%';
 
     if (elementdata) {
       dialogConfig.data = elementdata;
@@ -71,15 +84,24 @@ export class MedicineComponent implements OnInit {
               response => {
                 this.dataSource._updateChangeSubscription();
                 this.toastr.success('Successfully Updated', 'Success');
+              },
+              error => {
+                this.errorHandling(error);
               }
             );
           } else {
             this.medicineService.create(data)
             .subscribe(
               response => {
-                this.dataSource.data.push(data);
-                this.dataSource._updateChangeSubscription();
+                this.ngOnInit();
+                // this.dataSource.data.push(data);
+                // this.dataSource._updateChangeSubscription();
                 this.toastr.success('Successfully Added', 'Success');
+              },
+              error => {
+                console.log(error);
+                
+                this.errorHandling(error);
               }
             );
           }
@@ -96,6 +118,9 @@ export class MedicineComponent implements OnInit {
         this.dataSource.data.splice(index, 1);
         this.dataSource._updateChangeSubscription();
         this.toastr.success('Successfully Deleted', 'Success');
+      },
+      error => {
+        this.errorHandling(error);
       }
     );
   }
