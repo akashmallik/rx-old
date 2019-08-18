@@ -60,7 +60,6 @@ export class PatientComponent implements OnInit {
         .subscribe(
           (data: Patient[]) => {
             this.patient = data;
-            console.log(data);
           }
         );
       }

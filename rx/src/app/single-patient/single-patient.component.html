@@ -70,15 +70,38 @@
                             <textarea matInput [(ngModel)]="symp.patient" name="patient" placeholder="Patient"></textarea>
                         </mat-form-field>
                         <mat-form-field class="mat-form-field">
-                            <textarea matInput [(ngModel)]="symp.symptom" name="symptom" placeholder="Symptom"></textarea>
+                            <textarea matInput [(ngModel)]="symp.symptom" #sym="ngModel" name="symptom" placeholder="Symptom" required></textarea>
+                            <mat-error *ngIf="sym.touched && sym.invalid">The <strong>symptom</strong> field is required.</mat-error>
                         </mat-form-field>
                         <button mat-raised-button type="button" color="warn" (click)="symptomForm.reset(); symp = []" class="mr-2">Reset</button>
-                        <button mat-raised-button color="primary">{{ symp.length !== undefined ? 'Add' : 'Update' }}</button>
+                        <button mat-raised-button color="primary" [disabled]="symptomForm.invalid">{{ symp.length !== undefined ? 'Add' : 'Update' }}</button>
                     </form>
                     
                 </mat-tab>
                 <mat-tab label="Examination">
                     <div *ngIf="examination">
+
+                        <form #reportForm="ngForm" (ngSubmit)="report(reportForm.value); reportForm.reset()" class="mat-form">
+                            <mat-form-field class="mat-form-field">
+                                <input matInput [(ngModel)]="examination.pulse" name="pulse" placeholder="pulse">
+                            </mat-form-field>
+                            <mat-form-field class="mat-form-field">
+                                <input matInput [(ngModel)]="examination.bp" name="bp" placeholder="bp">
+                            </mat-form-field>
+                            <mat-form-field class="mat-form-field">
+                                <input matInput [(ngModel)]="examination.temp" name="temp" placeholder="temp">
+                            </mat-form-field>
+                            <mat-form-field class="mat-form-field">
+                                <input matInput [(ngModel)]="examination.resp_rate" name="resp_rate" placeholder="resp_rate">
+                            </mat-form-field>
+                            <mat-form-field class="mat-form-field">
+                                <input matInput [(ngModel)]="examination.height" name="height" placeholder="height">
+                            </mat-form-field>
+                            <mat-form-field class="mat-form-field">
+                                <input matInput [(ngModel)]="examination.lifestyle" name="lifestyle" placeholder="lifestyle">
+                            </mat-form-field>
+                            <button mat-raised-button color="primary" [disabled]="reportForm.invalid">{{ advic.length !== undefined ? 'Add' : 'Update' }}</button>
+                        </form>
                         <strong>Pulse:</strong> {{ examination.pulse }} <br>
                         <strong>BP:</strong> {{ examination.bp }} <br>
                         <strong>temp:</strong> {{ examination.temp }} <br>
@@ -88,31 +111,48 @@
                     </div> 
                 </mat-tab>
                 <mat-tab label="Medicine">
-                    <div *ngFor="let n of encount.medicines">{{ medicines[n-1].medicine }}</div>
-                    <form #medicineForm="ngForm" (ngSubmit)="medicine(medicineForm.value); medicineForm.reset()" class="mat-form">
-                        <mat-form-field class="mat-form-field">
-                            <mat-label>Medicine</mat-label>
-                            <mat-select ngModel name="medicines" multiple>
-                              <mat-option *ngFor="let topping of medicines" [value]="topping.id">{{topping.medicine}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <button mat-raised-button color="primary">Add</button>
-                    </form>
+                    <div *ngIf="encount.length === undefined">
+                        <div *ngFor="let n of encount.medicines">
+                            <div *ngFor="let m of medicines">
+                                <div *ngIf="n === m.id">{{ m.medicine }}</div>
+                            </div>
+                        </div>
+                        <form #medicineForm="ngForm" (ngSubmit)="medicine(medicineForm.value)" class="mat-form">
+                            <mat-form-field class="mat-form-field">
+                                <mat-label>Medicine</mat-label>
+                                <mat-select [(ngModel)]="encount.medicines" name="medicines" multiple>
+                                  <mat-option *ngFor="let m of medicines" [value]="m.id" selected>{{m.medicine}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <button mat-raised-button color="primary">Add</button>
+                        </form>
+                    </div>
+                    <div *ngIf="encount.length !== undefined">
+                        Please select encounter first! 
+                    </div>
                 </mat-tab>
                 <mat-tab label="Advice">
                     <mat-list>
                         <mat-list-item *ngFor="let a of advices">
-                            <h4 matLine>{{ a.advice }}</h4> 
+                            <h4 matLine>{{ a.advice }}</h4>
+                            <button mat-icon-button color="warn" (click)="singleAdvice(a)">
+                                <i class="material-icons">edit</i>
+                            </button> 
                             <button mat-icon-button color="warn" (click)="deleteAdvice(a)">
                                 <i class="material-icons">delete</i>
                             </button>
                         </mat-list-item>
                     </mat-list>
                     <form #adviceForm="ngForm" (ngSubmit)="advice(adviceForm.value); adviceForm.reset()" class="mat-form">
-                        <mat-form-field class="mat-form-field">
-                            <textarea matInput ngModel name="advice" placeholder="Advice"></textarea>
+                        <mat-form-field class="mat-form-field" hidden>
+                            <textarea matInput [(ngModel)]="advic.id" name="id" placeholder="Id"></textarea>
                         </mat-form-field>
-                        <button mat-raised-button color="primary">Add</button>
+                        <mat-form-field class="mat-form-field">
+                            <textarea matInput [(ngModel)]="advic.advice" #adv="ngModel" name="advice" placeholder="Advice" required></textarea>
+                            <mat-error *ngIf="adv.touched && adv.invalid">The <strong>advice</strong> field is required.</mat-error>
+                        </mat-form-field>
+                        <button mat-raised-button type="button" color="warn" (click)="adviceForm.reset(); advic = []" class="mr-2">Reset</button>
+                        <button mat-raised-button color="primary" [disabled]="adviceForm.invalid">{{ advic.length !== undefined ? 'Add' : 'Update' }}</button>
                     </form>
                 </mat-tab>
             </mat-tab-group>

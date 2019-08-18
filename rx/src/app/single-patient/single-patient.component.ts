@@ -45,6 +45,7 @@ export interface Visit {
 })
 export class SinglePatientComponent implements OnInit {
   patient: Patient[] = [];
+  advic: any[] = [];
   advices: any[] = [];
   encounters: any[] = [];
   symp: any[] = [];
@@ -92,12 +93,17 @@ export class SinglePatientComponent implements OnInit {
 
   ngOnInit() {
     this.adviceService.getAll()
-      .subscribe(
-        (data: any[]) => {
-          this.advices = data.filter(p => p.patient === this.id);
-        }
-      );
-    this.getSymtoms();
+    .subscribe(
+      (data: any[]) => {
+        this.advices = data.filter(p => p.patient === this.id);
+      }
+    );
+    this.symptomService.getAll()
+    .subscribe(
+      (data: any[]) => {
+        this.symptoms = data.filter(p => p.patient === this.id);
+      }
+    );
     this.examinationService.getAll()
     .subscribe(
       (data: any[]) => {
@@ -118,19 +124,6 @@ export class SinglePatientComponent implements OnInit {
     );
   }
 
-  advice(data) {
-    const formData: FormData = new FormData();
-    formData.append('advice', data.advice);
-    formData.append('patient', this.id.toString());
-    this.adviceService.create(formData)
-    .subscribe(
-      response => {
-        this.advices.push(data);
-        this.toastr.success('Successfully Added', 'Success');
-      }
-    );
-  }
-
   encounter(data) {
     const formData: FormData = new FormData();
     formData.append('date', data.date);
@@ -139,40 +132,33 @@ export class SinglePatientComponent implements OnInit {
     this.encounterService.create(formData)
     .subscribe(
       response => {
-        this.encounters.push(data);
+        this.encounters.splice(this.encounters.length, 0 , response);
         this.toastr.success('Successfully Added', 'Success');
       }
     );
   }
+
   medicine(data) {
-    var json_arr = JSON.stringify(data.medicine);
     const formData: FormData = new FormData();
+
     formData.append('medicines', data.medicine);
     formData.append('patient', this.id.toString());
-    // formData.append('id', this.encounterId);
+    formData.append('id', this.encounterId);
+
     this.encounterService.update(this.encounterId, data)
     .subscribe(
-      response => {
-        this.medicines.push(data);
+      (response: any) => {
         this.toastr.success('Successfully Added', 'Success');
       }
     );
   }
 
-  getSymtoms() {
-    this.symptomService.getAll()
-    .subscribe(
-      (data: any[]) => {
-        this.symptoms = data.filter(p => p.patient === this.id);
-      }
-    );
+  report(value)  {
+    console.log(value);
   }
 
-  // reset() {
-  //   this.symp = [];
-  // }
-
   symptom(data) {
+    const index = this.symptoms.indexOf(data);
     const formData: FormData = new FormData();
     formData.append('symptom', data.symptom);
     formData.append('patient', this.id.toString());
@@ -180,8 +166,8 @@ export class SinglePatientComponent implements OnInit {
       formData.append('id', data.id);
       this.symptomService.update(data.id, formData)
       .subscribe(
-        response => {
-          this.getSymtoms();
+        (response: any) => {
+          this.symptoms.splice(index, 1, response);
           this.toastr.success('Successfully Updated', 'Success');
         }
       );
@@ -189,9 +175,8 @@ export class SinglePatientComponent implements OnInit {
 
       this.symptomService.create(formData)
       .subscribe(
-        response => {
-          this.getSymtoms();
-          // this.symptoms.push(data);
+        (response: any) => {
+          this.symptoms.splice(this.symptoms.length, 0 , response);
           this.toastr.success('Successfully Added', 'Success');
         }
       );
@@ -217,6 +202,43 @@ export class SinglePatientComponent implements OnInit {
       data => {
         this.symptoms.splice(index, 1);
         this.toastr.success('Successfully Deleted', 'Success');
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  advice(data) {
+    const index = this.advices.indexOf(data);
+    const formData: FormData = new FormData();
+    formData.append('advice', data.advice);
+    formData.append('patient', this.id.toString());
+    if (data.id) {
+      formData.append('id', data.id);
+      this.adviceService.update(data.id, formData)
+      .subscribe(
+        (response: any) => {
+          this.advices.splice(index, 1, response);
+          this.toastr.success('Successfully Updated', 'Success');
+        }
+      );
+    } else {
+      this.adviceService.create(formData)
+      .subscribe(
+        response => {
+          this.advices.splice(this.advices.length, 0 , response);
+          this.toastr.success('Successfully Added', 'Success');
+        }
+      );
+    }
+  }
+
+  singleAdvice(item) {
+    this.adviceService.get(item.id)
+    .subscribe(
+      (data: any[]) => {
+        this.advic = data;
       },
       error => {
         console.log(error);
