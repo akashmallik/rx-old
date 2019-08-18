@@ -97,10 +97,9 @@ export class MedicineComponent implements OnInit {
           } else {
             this.medicineService.create(data)
             .subscribe(
-              response => {
-                this.ngOnInit();
-                // this.dataSource.data.push(data);
-                // this.dataSource._updateChangeSubscription();
+              (response: Medicine) => {
+                this.dataSource.data.splice(this.dataSource.data.length, 0, response);
+                this.dataSource._updateChangeSubscription();
                 this.toastr.success('Successfully Added', 'Success');
               },
               error => {
