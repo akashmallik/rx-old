@@ -70,7 +70,6 @@ export class MedicineComponent implements OnInit {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    // dialogConfig.width = '60%';
 
     if (elementdata) {
       dialogConfig.data = elementdata;
