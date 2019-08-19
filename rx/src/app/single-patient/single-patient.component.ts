@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PatientService } from '../services/patient.service';
 import { ActivatedRoute } from '@angular/router';
 import { AdviceService } from '../services/advice.service';
@@ -7,8 +7,6 @@ import { ToastrService } from 'ngx-toastr';
 import { MedicineService } from '../services/medicine.service';
 import { ExaminationService } from '../services/examination.service';
 import { SymptomService } from '../services/symptom.service';
-import {FormControl} from '@angular/forms';
-
 
 export interface Patient {
   id: number;
@@ -31,6 +29,16 @@ export interface Patient {
   age: number;
   blood_group: string;
   avatar: string;
+}
+export interface Examination {
+  id: string;
+  pulse: number;
+  bp: string;
+  temp: number;
+  resp_rate: number;
+  height: number;
+  lifestyle: string;
+  patient: string;
 }
 
 export interface Visit {
@@ -107,7 +115,10 @@ export class SinglePatientComponent implements OnInit {
     this.examinationService.getAll()
     .subscribe(
       (data: any[]) => {
-        this.examination = data.find(p => p.patient === this.id);
+        const filtered = data.find(p => p.patient === this.id);
+        if (filtered) {
+          this.examination = filtered;
+        }
       }
     );
     this.encounterService.getAll()
@@ -154,7 +165,32 @@ export class SinglePatientComponent implements OnInit {
   }
 
   report(value)  {
-    console.log(value);
+    const formData: FormData = new FormData();
+    formData.append('pulse', value.pulse);
+    formData.append('bp', value.bp);
+    formData.append('temp', value.temp);
+    formData.append('resp_rate', value.resp_rate);
+    formData.append('height', value.height);
+    formData.append('lifestyle', value.lifestyle);
+    formData.append('patient', this.id.toString());
+    if (value.id) {
+      formData.append('id', value.id);
+      this.examinationService.update(value.id, formData)
+      .subscribe(
+        (response: any) => {
+          this.examination = response;
+          this.toastr.success('Successfully Updated', 'Success');
+        }
+      );
+    } else {
+      this.examinationService.create(formData)
+      .subscribe(
+        (response: any) => {
+          this.examination = response;
+          this.toastr.success('Successfully Added', 'Success');
+        }
+      );
+    }
   }
 
   symptom(data) {

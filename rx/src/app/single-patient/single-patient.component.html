@@ -54,7 +54,7 @@
                     <mat-list>
                         <mat-list-item *ngFor="let s of symptoms">
                             <h4 matLine>{{ s.symptom }}</h4> 
-                            <button mat-icon-button color="warn" (click)="sigleSymptom(s)">
+                            <button mat-icon-button color="primary" (click)="sigleSymptom(s)">
                                 <i class="material-icons">edit</i>
                             </button>
                             <button mat-icon-button color="warn" (click)="deleteSymptom(s)">
@@ -79,42 +79,36 @@
                     
                 </mat-tab>
                 <mat-tab label="Examination">
-                    <div *ngIf="examination">
-
-                        <form #reportForm="ngForm" (ngSubmit)="report(reportForm.value); reportForm.reset()" class="mat-form">
-                            <mat-form-field class="mat-form-field">
-                                <input matInput [(ngModel)]="examination.pulse" name="pulse" placeholder="pulse">
-                            </mat-form-field>
-                            <mat-form-field class="mat-form-field">
-                                <input matInput [(ngModel)]="examination.bp" name="bp" placeholder="bp">
-                            </mat-form-field>
-                            <mat-form-field class="mat-form-field">
-                                <input matInput [(ngModel)]="examination.temp" name="temp" placeholder="temp">
-                            </mat-form-field>
-                            <mat-form-field class="mat-form-field">
-                                <input matInput [(ngModel)]="examination.resp_rate" name="resp_rate" placeholder="resp_rate">
-                            </mat-form-field>
-                            <mat-form-field class="mat-form-field">
-                                <input matInput [(ngModel)]="examination.height" name="height" placeholder="height">
-                            </mat-form-field>
-                            <mat-form-field class="mat-form-field">
-                                <input matInput [(ngModel)]="examination.lifestyle" name="lifestyle" placeholder="lifestyle">
-                            </mat-form-field>
-                            <button mat-raised-button color="primary" [disabled]="reportForm.invalid">{{ advic.length !== undefined ? 'Add' : 'Update' }}</button>
-                        </form>
-                        <strong>Pulse:</strong> {{ examination.pulse }} <br>
-                        <strong>BP:</strong> {{ examination.bp }} <br>
-                        <strong>temp:</strong> {{ examination.temp }} <br>
-                        <strong>resp_rate:</strong> {{ examination.resp_rate }} <br>
-                        <strong>height:</strong> {{ examination.height }} <br>
-                        <strong>lifestyle:</strong> {{ examination.lifestyle }}
-                    </div> 
+                    <form #reportForm="ngForm" (ngSubmit)="report(reportForm.value); reportForm.reset()" class="mat-form">
+                        <mat-form-field class="mat-form-field" hidden>
+                            <input matInput [(ngModel)]="examination.id" name="id" placeholder="id">
+                        </mat-form-field>
+                        <mat-form-field class="mat-form-field">
+                            <input matInput [(ngModel)]="examination.pulse" name="pulse" placeholder="pulse">
+                        </mat-form-field>
+                        <mat-form-field class="mat-form-field">
+                            <input matInput [(ngModel)]="examination.bp" name="bp" placeholder="bp">
+                        </mat-form-field>
+                        <mat-form-field class="mat-form-field">
+                            <input matInput [(ngModel)]="examination.temp" name="temp" placeholder="temp">
+                        </mat-form-field>
+                        <mat-form-field class="mat-form-field">
+                            <input matInput [(ngModel)]="examination.resp_rate" name="resp_rate" placeholder="resp_rate">
+                        </mat-form-field>
+                        <mat-form-field class="mat-form-field">
+                            <input matInput [(ngModel)]="examination.height" name="height" placeholder="height">
+                        </mat-form-field>
+                        <mat-form-field class="mat-form-field">
+                            <input matInput [(ngModel)]="examination.lifestyle" name="lifestyle" placeholder="lifestyle">
+                        </mat-form-field>
+                        <button mat-raised-button color="primary" [disabled]="reportForm.invalid">{{ examination.id ? 'Update' : 'Add' }}</button>
+                    </form>
                 </mat-tab>
                 <mat-tab label="Medicine">
                     <div *ngIf="encount.length === undefined">
                         <div *ngFor="let n of encount.medicines">
                             <div *ngFor="let m of medicines">
-                                <div *ngIf="n === m.id">{{ m.medicine }}</div>
+                                <div *ngIf="n === m.id" class="mb-3">{{ m.medicine }}</div>
                             </div>
                         </div>
                         <form #medicineForm="ngForm" (ngSubmit)="medicine(medicineForm.value)" class="mat-form">

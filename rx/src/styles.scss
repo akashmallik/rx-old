@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import "~normalize.css/normalize.css";
 @import "~bootstrap/dist/css/bootstrap-grid.min.css";
 // @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
@@ -19,7 +20,8 @@ table {
 }
 
 .active {
-  color: red !important;
+  color: #ffffff !important;
+  background-color: #3f51b5 !important
 }
 
 mat-form-field[hidden] {

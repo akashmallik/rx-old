@@ -37,9 +37,9 @@ class Examination(models.Model):
     pulse = models.SmallIntegerField()
     bp = models.CharField(max_length=6)
     temp = models.SmallIntegerField()
-    Resp_Rate = models.SmallIntegerField()
+    resp_rate = models.SmallIntegerField()
     height = models.SmallIntegerField()
-    lifestyle = models.CharField(max_length=6)
+    lifestyle = models.TextField()
     patient =  models.ForeignKey(Patient, on_delete=models.CASCADE, null =True)
 
     def __str__(self):
