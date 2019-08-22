@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EncounterService {
-  private configUrl = 'http://127.0.0.1:8000/encounter/';
+  private configUrl = environment + '/encounter/';
 
   constructor(private http: HttpClient) { }
 

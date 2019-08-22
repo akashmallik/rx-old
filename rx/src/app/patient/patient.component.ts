@@ -30,7 +30,7 @@ export interface Blood {
 })
 export class PatientComponent implements OnInit {
   private selectedFile = null;
-  patient: Patient[] = [];
+  patient = [];
   id: any;
 
   sex: Sex[] = [

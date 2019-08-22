@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdviceService {
-  private configUrl = 'http://127.0.0.1:8000/advice/';
+  private configUrl = environment + '/advice/';
 
   constructor(private http: HttpClient) { }
 
