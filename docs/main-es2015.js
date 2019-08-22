@@ -1366,7 +1366,7 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 const environment = {
     production: false,
-    API_URL: 'http://rxpy.pythonanywhere.com',
+    API_URL: 'https://rxpy.pythonanywhere.com',
 };
 /*
  * For easier debugging in development mode, you can import the following file
