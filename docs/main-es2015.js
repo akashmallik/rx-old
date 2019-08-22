@@ -795,7 +795,7 @@ __webpack_require__.r(__webpack_exports__);
 let AdviceService = class AdviceService {
     constructor(http) {
         this.http = http;
-        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"] + '/advice/';
+        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].API_URL + '/advice/';
     }
     getAll() {
         return this.http.get(this.configUrl);
@@ -848,7 +848,7 @@ __webpack_require__.r(__webpack_exports__);
 let EncounterService = class EncounterService {
     constructor(http) {
         this.http = http;
-        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"] + '/encounter/';
+        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].API_URL + '/encounter/';
     }
     getAll() {
         return this.http.get(this.configUrl);
@@ -901,7 +901,7 @@ __webpack_require__.r(__webpack_exports__);
 let ExaminationService = class ExaminationService {
     constructor(http) {
         this.http = http;
-        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"] + '/examination/';
+        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].API_URL + '/examination/';
     }
     getAll() {
         return this.http.get(this.configUrl);
@@ -954,7 +954,7 @@ __webpack_require__.r(__webpack_exports__);
 let MedicineService = class MedicineService {
     constructor(http) {
         this.http = http;
-        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"] + '/medicine/';
+        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].API_URL + '/medicine/';
     }
     getAll() {
         return this.http.get(this.configUrl);
@@ -1007,7 +1007,7 @@ __webpack_require__.r(__webpack_exports__);
 let PatientService = class PatientService {
     constructor(http) {
         this.http = http;
-        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"] + '/patients/';
+        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].API_URL + '/patients/';
     }
     getAll() {
         return this.http.get(this.configUrl);

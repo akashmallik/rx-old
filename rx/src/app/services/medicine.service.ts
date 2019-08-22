@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 })
 export class MedicineService {
 
-  private configUrl = environment + '/medicine/';
+  private configUrl = environment.API_URL + '/medicine/';
 
   constructor(private http: HttpClient) { }
 

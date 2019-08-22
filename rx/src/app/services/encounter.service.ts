@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class EncounterService {
-  private configUrl = environment + '/encounter/';
+  private configUrl = environment.API_URL + '/encounter/';
 
   constructor(private http: HttpClient) { }
 

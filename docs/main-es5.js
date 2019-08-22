@@ -815,7 +815,7 @@ __webpack_require__.r(__webpack_exports__);
 var AdviceService = /** @class */ (function () {
     function AdviceService(http) {
         this.http = http;
-        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"] + '/advice/';
+        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].API_URL + '/advice/';
     }
     AdviceService.prototype.getAll = function () {
         return this.http.get(this.configUrl);
@@ -869,7 +869,7 @@ __webpack_require__.r(__webpack_exports__);
 var EncounterService = /** @class */ (function () {
     function EncounterService(http) {
         this.http = http;
-        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"] + '/encounter/';
+        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].API_URL + '/encounter/';
     }
     EncounterService.prototype.getAll = function () {
         return this.http.get(this.configUrl);
@@ -923,7 +923,7 @@ __webpack_require__.r(__webpack_exports__);
 var ExaminationService = /** @class */ (function () {
     function ExaminationService(http) {
         this.http = http;
-        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"] + '/examination/';
+        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].API_URL + '/examination/';
     }
     ExaminationService.prototype.getAll = function () {
         return this.http.get(this.configUrl);
@@ -977,7 +977,7 @@ __webpack_require__.r(__webpack_exports__);
 var MedicineService = /** @class */ (function () {
     function MedicineService(http) {
         this.http = http;
-        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"] + '/medicine/';
+        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].API_URL + '/medicine/';
     }
     MedicineService.prototype.getAll = function () {
         return this.http.get(this.configUrl);
@@ -1031,7 +1031,7 @@ __webpack_require__.r(__webpack_exports__);
 var PatientService = /** @class */ (function () {
     function PatientService(http) {
         this.http = http;
-        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"] + '/patients/';
+        this.configUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].API_URL + '/patients/';
     }
     PatientService.prototype.getAll = function () {
         return this.http.get(this.configUrl);
