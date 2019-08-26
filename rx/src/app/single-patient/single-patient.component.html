@@ -84,22 +84,22 @@
                             <input matInput [(ngModel)]="examination.id" name="id" placeholder="id">
                         </mat-form-field>
                         <mat-form-field class="mat-form-field">
-                            <input matInput [(ngModel)]="examination.pulse" name="pulse" placeholder="pulse">
+                            <input matInput [(ngModel)]="examination.pulse" name="pulse" placeholder="Pulse">
                         </mat-form-field>
                         <mat-form-field class="mat-form-field">
-                            <input matInput [(ngModel)]="examination.bp" name="bp" placeholder="bp">
+                            <input matInput [(ngModel)]="examination.bp" name="bp" placeholder="BP">
                         </mat-form-field>
                         <mat-form-field class="mat-form-field">
-                            <input matInput [(ngModel)]="examination.temp" name="temp" placeholder="temp">
+                            <input matInput [(ngModel)]="examination.temp" name="temp" placeholder="Temp">
                         </mat-form-field>
                         <mat-form-field class="mat-form-field">
-                            <input matInput [(ngModel)]="examination.resp_rate" name="resp_rate" placeholder="resp_rate">
+                            <input matInput [(ngModel)]="examination.resp_rate" name="resp_rate" placeholder="Resp rate">
                         </mat-form-field>
                         <mat-form-field class="mat-form-field">
-                            <input matInput [(ngModel)]="examination.height" name="height" placeholder="height">
+                            <input matInput [(ngModel)]="examination.height" name="height" placeholder="Height">
                         </mat-form-field>
                         <mat-form-field class="mat-form-field">
-                            <input matInput [(ngModel)]="examination.lifestyle" name="lifestyle" placeholder="lifestyle">
+                            <input matInput [(ngModel)]="examination.lifestyle" name="lifestyle" placeholder="Lifestyle">
                         </mat-form-field>
                         <button mat-raised-button color="primary" [disabled]="reportForm.invalid">{{ examination.id ? 'Update' : 'Add' }}</button>
                     </form>
@@ -192,12 +192,12 @@
                                     </ul>
                                     <h4>General Info</h4> <hr>
                                     <ul>
-                                        <li>pulse: {{ examination.pulse }}</li>
-                                        <li>bp: {{ examination.bp }}</li>
-                                        <li>temp: {{ examination.temp }}</li>
-                                        <li>resp_rate: {{ examination.resp_rate }}</li>
-                                        <li>height: {{ examination.height }}</li>
-                                        <li>lifestyle: {{ examination.lifestyle }}</li>
+                                        <li>Pulse: {{ examination.pulse }}</li>
+                                        <li>B.P.: {{ examination.bp }}</li>
+                                        <li>Temp: {{ examination.temp }}</li>
+                                        <li>Resp rate: {{ examination.resp_rate }}</li>
+                                        <li>Height: {{ examination.height }}</li>
+                                        <li>Lifestyle: {{ examination.lifestyle }}</li>
                                     </ul>
                                     <h4>Advices</h4> <hr>
                                     <ul>

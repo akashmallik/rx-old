@@ -195,11 +195,11 @@ export class SinglePatientComponent implements OnInit {
   }
 
   symptom(data) {
-    const index = this.symptoms.indexOf(data);
     const formData: FormData = new FormData();
     formData.append('symptom', data.symptom);
     formData.append('patient', this.id.toString());
     if (data.id) {
+      const index = this.symptoms.map(x => x.id).indexOf(data.id);
       formData.append('id', data.id);
       this.symptomService.update(data.id, formData)
       .subscribe(
@@ -209,7 +209,6 @@ export class SinglePatientComponent implements OnInit {
         }
       );
     } else {
-
       this.symptomService.create(formData)
       .subscribe(
         (response: any) => {
@@ -247,11 +246,11 @@ export class SinglePatientComponent implements OnInit {
   }
 
   advice(data) {
-    const index = this.advices.indexOf(data);
     const formData: FormData = new FormData();
     formData.append('advice', data.advice);
     formData.append('patient', this.id.toString());
     if (data.id) {
+      const index = this.advices.map(x => x.id).indexOf(data.id);
       formData.append('id', data.id);
       this.adviceService.update(data.id, formData)
       .subscribe(
