@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { PatientService } from '../services/patient.service';
 import { ActivatedRoute } from '@angular/router';
 import { AdviceService } from '../services/advice.service';
@@ -52,6 +52,7 @@ export interface Visit {
   styleUrls: ['./single-patient.component.scss']
 })
 export class SinglePatientComponent implements OnInit {
+  @ViewChild('print', { read: ElementRef, static: false }) print: ElementRef;
   patient: Patient[] = [];
   advic: any[] = [];
   advices: any[] = [];
@@ -294,6 +295,10 @@ export class SinglePatientComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  printPage() {
+    window.print();
   }
 
 }

@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 d-print-none">
             <mat-card class="example-card">
                 <mat-card-header>
                     <div mat-card-avatar [ngStyle]="{ 'background-image': 'url(' + patient.avatar + ')', 'background-size': 'cover'}"></div>
@@ -150,28 +150,31 @@
                     </form>
                 </mat-tab>
                 <mat-tab label="Prescription">
-                    <mat-card class="example-card">
+                    <mat-card class="example-card" #print>
                         <mat-card-content>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <h3>Dr: Akash Mallik</h3>
+                                <div class="col-8">
+                                    <strong class="text-capitalize">DR: SHOFIQUL ISLAM</strong> <br>
                                     <strong>MBBS</strong> <br>
                                     Stength: General Surgery <br>
-                                    Reg. No. -55065
+                                    Reg. No.- 55065
                                 </div>
-                                <div class="col-md-6 text-right">
-                                    Dhaka Medical Institute
+                                <div class="col-4">
+                                    <strong>ABC DIAGNOSTIC CENTRE</strong> <br>
+                                    <strong>Phone:</strong> 02-58610000-8 <br>
+                                    <strong>Email:</strong>	info@abcgroup.com <br>
+                                    <strong>Website:</strong> www.abcgroup.com
                                 </div>
                             </div>
                             <hr>
                             <div class="">
                                 <h3 class="text-center">Patient: <strong>{{ patient.name }}</strong></h3>
-                                <div class="row">
-                                    <div class="col-md-9">
+                                <div class="row align-items-middle">
+                                    <div class="col-9">
                                         <strong>Sex:</strong> {{ patient.sex }} <strong>Age:</strong> {{ patient.age }} <strong>Blood Group:</strong> {{ patient.blood_group }} <br>
-                                        <strong>Phone:</strong> {{ patient.phone }} <strong>Email:</strong> {{ patient.email }} <strong>Address:</strong> {{ patient.address }}
+                                        <strong>Phone:</strong> {{ patient.phone }} <strong>Email:</strong> {{ patient.email }} <br> <strong>Address:</strong> {{ patient.address }}
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-3">
                                         <strong>Encounter Id: </strong> {{ encount.id }} <br>
                                         <strong>Date: </strong> {{ encount.date }}
                                     </div>
@@ -180,7 +183,7 @@
                             <hr>
                             <hr>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-4">
                                     <h4>Symptoms</h4> <hr>
                                     <ul>
                                         <li *ngFor="let s of symptoms">
@@ -204,7 +207,7 @@
                                     </ul>
 
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-8">
                                     <h4>Medicines</h4> <hr>
                                     <ul *ngFor="let n of encount.medicines">
                                         <div *ngFor="let m of medicines">
@@ -219,7 +222,7 @@
                         </mat-card-footer>
                     </mat-card>
                     
-                    <button mat-raised-button color="primary" class="mt-3 float-right">Print</button>
+                    <button mat-raised-button color="primary" (click)="printPage()" class="mt-3 float-right  d-print-none">Print</button>
                 </mat-tab>
             </mat-tab-group>
         </div>
