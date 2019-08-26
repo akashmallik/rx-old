@@ -20,6 +20,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { QRCodeModule } from 'angularx-qrcode';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -68,7 +69,8 @@ import { MedicineDialogComponent } from './medicine-dialog/medicine-dialog.compo
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatDialogModule
+    MatDialogModule,
+    QRCodeModule
   ],
   providers: [
     // { provide: MatDialogRef, useValue: {} },

@@ -175,7 +175,7 @@
                                         <strong>Phone:</strong> {{ patient.phone }} <strong>Email:</strong> {{ patient.email }} <br> <strong>Address:</strong> {{ patient.address }}
                                     </div>
                                     <div class="col-3">
-                                        <strong>Encounter Id: </strong> {{ encount.id }} <br>
+                                        <strong>Encounter Id: </strong> <qrcode qrdata="1" [size]="30" [level]="'L'"></qrcode><br>
                                         <strong>Date: </strong> {{ encount.date }}
                                     </div>
                                 </div>
