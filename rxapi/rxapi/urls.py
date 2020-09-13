@@ -31,8 +31,8 @@ router.register('examination', views.ExaminationViewSet)
 router.register('symptom', views.SymptomViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
+    path('admin/', admin.site.urls)
 ]
 
 if settings.DEBUG:

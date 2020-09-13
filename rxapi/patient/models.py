@@ -12,7 +12,7 @@ class Patient(models.Model):
         ('Female', 'Female'),
         ('Others', 'Others'),
     )
-    sex = models.CharField(max_length=6, choices=SEX_CHOICES,)
+    sex = models.CharField(max_length=6, choices=SEX_CHOICES)
     age = models.IntegerField()
     BLOOD_GROUP_CHOICES = (
         ('', 'Select Blood Group'),
