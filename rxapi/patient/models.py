@@ -1,5 +1,5 @@
 from django.db import models
-from django.urls import reverse
+
 
 class Patient(models.Model):
     name = models.CharField(max_length=120)
@@ -27,7 +27,6 @@ class Patient(models.Model):
     )
     blood_group = models.CharField(max_length=3, choices=BLOOD_GROUP_CHOICES, null=True)
     avatar = models.ImageField(upload_to='uploads/', null=True, blank=True, default='default/user.png')
-    
 
     def __str__(self):
         return self.name
@@ -40,7 +39,7 @@ class Examination(models.Model):
     resp_rate = models.SmallIntegerField()
     height = models.SmallIntegerField()
     lifestyle = models.TextField()
-    patient =  models.ForeignKey(Patient, on_delete=models.CASCADE, null =True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.bp
@@ -59,22 +58,25 @@ class Encounter(models.Model):
         ('', 'Select Type'),
         ('ODP', 'ODP'),
     )
-    visit_type = models.CharField(max_length=6, choices=TYPE_CHOICES, null =True)
-    patient =  models.ForeignKey(Patient, on_delete=models.CASCADE, null =True)
-    medicines = models.ManyToManyField(Medicine, null=True, blank = True)
+    visit_type = models.CharField(max_length=6, choices=TYPE_CHOICES, null=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
+    medicines = models.ManyToManyField(Medicine, null=True, blank=True)
+
     def __str__(self):
         return self.patient.name+'_'+str(self.date)
 
 
 class Advice(models.Model):
     advice = models.TextField()
-    patient =  models.ForeignKey(Patient, on_delete=models.CASCADE, null =True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
+
     def __str__(self):
         return self.advice
 
 
 class Symptom(models.Model):
     symptom = models.TextField()
-    patient =  models.ForeignKey(Patient, on_delete=models.CASCADE, null =True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
+
     def __str__(self):
         return self.symptom

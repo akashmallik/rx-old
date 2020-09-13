@@ -125,32 +125,10 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT= os.path.join(BASE_DIR, "media")
-
-
-# REST_FRAMEWORK = {
-#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-#     'PAGE_SIZE': 10
-# }
-
-# REST_FRAMEWORK = {
-#     'DEFAULT_PARSER_CLASSES': (
-#         'rest_framework.parsers.FileUploadParser'
-#     )
-# }
-
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:4200',
     'http://localhost:4200',
     'https://akashmallik.github.io'
 ]
-
-# CORS_ALLOW_METHODS = (
-#     'DELETE',
-#     'GET',
-#     'OPTIONS',
-#     'PATCH',
-#     'POST',
-#     'PUT',
-# )
