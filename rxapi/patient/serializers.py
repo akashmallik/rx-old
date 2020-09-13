@@ -2,15 +2,17 @@ from rest_framework import serializers
 from .models import Patient, Encounter, Advice, Medicine, Examination, Symptom
 
 
-class PatientSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Patient
-        fields = '__all__'
-
-
 class EncounterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Encounter
+        fields = '__all__'
+
+
+class PatientSerializer(serializers.ModelSerializer):
+    encounters = EncounterSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Patient
         fields = '__all__'
 
 

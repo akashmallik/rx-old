@@ -59,7 +59,9 @@ class Encounter(models.Model):
         ('ODP', 'ODP'),
     )
     visit_type = models.CharField(max_length=6, choices=TYPE_CHOICES, null=True)
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
+    patient = models.ForeignKey(Patient,
+                                related_name='encounters',
+                                on_delete=models.CASCADE)
     medicines = models.ManyToManyField(Medicine, null=True, blank=True)
 
     def __str__(self):
