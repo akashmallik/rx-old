@@ -20,8 +20,7 @@
                     <div class="col-md-4">
                         <mat-form-field class="mat-form-field">
                             <mat-label>Sex</mat-label>
-                            <mat-select [(ngModel)]="patient.sex" name="sex">
-                                <!-- <mat-option *ngFor="let s of sex | keyvalue" [value]="s.key"> -->
+                            <mat-select [(ngModel)]="patient.sex" name="sex" required>
                                 <mat-option *ngFor="let s of sex" [value]="s.key">
                                 {{ s.value }}
                                 </mat-option>
@@ -66,7 +65,7 @@
 
                 <button mat-raised-button [disabled]="patientForm.invalid" color="primary">Submit</button>
             </form>
-    
+
         </div>
         <div class="col-md-4">
             <mat-card class="example-card" *ngIf="patient.length === undefined">
@@ -83,7 +82,7 @@
                     <strong>Address:</strong> {{ patient.address }}
                 </mat-card-content>
             </mat-card>
-    
+
         </div>
     </div>
 </div>
