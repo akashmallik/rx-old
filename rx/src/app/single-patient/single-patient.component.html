@@ -53,7 +53,7 @@
                 <mat-tab label="C/C">
                     <mat-list>
                         <mat-list-item *ngFor="let s of symptoms">
-                            <h4 matLine>{{ s.symptom }}</h4> 
+                            <h4 matLine>{{ s.symptom }}</h4>
                             <button mat-icon-button color="primary" (click)="sigleSymptom(s)">
                                 <i class="material-icons">edit</i>
                             </button>
@@ -76,7 +76,7 @@
                         <button mat-raised-button type="button" color="warn" (click)="symptomForm.reset(); symp = []" class="mr-2">Reset</button>
                         <button mat-raised-button color="primary" [disabled]="symptomForm.invalid">{{ symp.length !== undefined ? 'Add' : 'Update' }}</button>
                     </form>
-                    
+
                 </mat-tab>
                 <mat-tab label="Examination">
                     <form #reportForm="ngForm" (ngSubmit)="report(reportForm.value); reportForm.reset()" class="mat-form">
@@ -122,7 +122,7 @@
                         </form>
                     </div>
                     <div *ngIf="encount.length !== undefined">
-                        Please select encounter first! 
+                        Please select encounter first!
                     </div>
                 </mat-tab>
                 <mat-tab label="Advice">
@@ -131,7 +131,7 @@
                             <h4 matLine>{{ a.advice }}</h4>
                             <button mat-icon-button color="warn" (click)="singleAdvice(a)">
                                 <i class="material-icons">edit</i>
-                            </button> 
+                            </button>
                             <button mat-icon-button color="warn" (click)="deleteAdvice(a)">
                                 <i class="material-icons">delete</i>
                             </button>
@@ -154,16 +154,16 @@
                         <mat-card-content>
                             <div class="row">
                                 <div class="col-8">
-                                    <strong class="text-capitalize">DR: SHOFIQUL ISLAM</strong> <br>
-                                    <strong>MBBS</strong> <br>
-                                    Stength: General Surgery <br>
+                                    <strong class="text-capitalize">DR: SAGAR MALLIK</strong> <br>
+                                    <strong>DHMS</strong> <br>
+                                    Stength: General <br>
                                     Reg. No.- 55065
                                 </div>
                                 <div class="col-4">
-                                    <strong>ABC DIAGNOSTIC CENTRE</strong> <br>
-                                    <strong>Phone:</strong> 02-58610000-8 <br>
-                                    <strong>Email:</strong>	info@abcgroup.com <br>
-                                    <strong>Website:</strong> www.abcgroup.com
+                                    <strong>Maa Homeo Pharmacy</strong> <br>
+                                    <strong>Phone:</strong> +88 01777-334628 <br>
+                                    <strong>Email:</strong>	info@maahomeo.com <br>
+                                    <strong>Website:</strong> www.maahomeo.com
                                 </div>
                             </div>
                             <hr>
@@ -221,7 +221,7 @@
                             <div class="text-center copyright">Designed & Developed By: <strong>Team R<sub>x</sub></strong></div>
                         </mat-card-footer>
                     </mat-card>
-                    
+
                     <button mat-raised-button color="primary" (click)="printPage()" class="mt-3 float-right  d-print-none">Print</button>
                 </mat-tab>
             </mat-tab-group>
