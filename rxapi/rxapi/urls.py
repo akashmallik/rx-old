@@ -19,16 +19,7 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from rest_framework import routers
-from patient import views
-
-router = routers.DefaultRouter()
-router.register('patients', views.PatientViewSet)
-router.register('encounter', views.EncounterViewSet)
-router.register('advice', views.AdviceViewSet)
-router.register('medicine', views.MedicineViewSet)
-router.register('examination', views.ExaminationViewSet)
-router.register('symptom', views.SymptomViewSet)
+from patient.urls import router
 
 urlpatterns = [
     path('api/', include(router.urls)),

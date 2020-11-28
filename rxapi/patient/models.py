@@ -31,54 +31,62 @@ class Patient(models.Model):
     def __str__(self):
         return self.name
 
-    
+
+class Symptom(models.Model):
+    symptom = models.TextField()
+
+    def __str__(self):
+        return self.symptom
+
+
 class Examination(models.Model):
-    pulse = models.SmallIntegerField()
-    bp = models.CharField(max_length=6)
-    temp = models.SmallIntegerField()
-    resp_rate = models.SmallIntegerField()
-    height = models.SmallIntegerField()
-    lifestyle = models.TextField()
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
+    pulse = models.SmallIntegerField(null=True, blank=True)
+    bp = models.CharField(max_length=7, null=True, blank=True)
+    temp = models.SmallIntegerField(null=True, blank=True)
+    resp_rate = models.SmallIntegerField(null=True, blank=True)
+    height = models.SmallIntegerField(null=True, blank=True)
+    lifestyle = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.bp
-    
 
-class Medicine(models.Model):
-    medicine = models.CharField(max_length=40)
+
+class MedicinePower(models.Model):
+    name = models.CharField(max_length=40)
 
     def __str__(self):
-        return self.medicine
-    
+        return self.name
+
+
+class Medicine(models.Model):
+    name = models.CharField(max_length=180)
+    power = models.ForeignKey(MedicinePower, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return f'{self.name} {self.power.name}'
+
+
+class Advice(models.Model):
+    advice = models.TextField()
+
+    def __str__(self):
+        return self.advice
+
 
 class Encounter(models.Model):
+    patient = models.ForeignKey(Patient,
+                                related_name='encounters',
+                                on_delete=models.CASCADE)
     date = models.DateField(auto_now=True)
     TYPE_CHOICES = (
         ('', 'Select Type'),
         ('ODP', 'ODP'),
     )
     visit_type = models.CharField(max_length=6, choices=TYPE_CHOICES, null=True)
-    patient = models.ForeignKey(Patient,
-                                related_name='encounters',
-                                on_delete=models.CASCADE)
-    medicines = models.ManyToManyField(Medicine, null=True, blank=True)
+    symptoms = models.ManyToManyField(Symptom, related_name='encounters')
+    examination = models.OneToOneField(Examination, on_delete=models.CASCADE)
+    medicines = models.ManyToManyField(Medicine)
+    advices = models.ManyToManyField(Advice)
 
     def __str__(self):
-        return self.patient.name+'_'+str(self.date)
-
-
-class Advice(models.Model):
-    advice = models.TextField()
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
-
-    def __str__(self):
-        return self.advice
-
-
-class Symptom(models.Model):
-    symptom = models.TextField()
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
-
-    def __str__(self):
-        return self.symptom
+        return f'{self.patient.name}-{self.date}'

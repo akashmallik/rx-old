@@ -1,8 +1,13 @@
 from rest_framework import routers
-from . import views
 
+from .views import PatientViewSet, EncounterViewSet, SymptomViewSet, ExaminationViewSet, MedicineViewSet, \
+    MedicinePowerViewSet, AdviceViewSet
 
 router = routers.DefaultRouter()
-router.register('patients', views.PatientViewSet)
-router.register('encounter', views.EncounterViewSet)
-router.register('medicine', views.MedicineViewSet)
+router.register('patients', PatientViewSet)
+router.register('encounter', EncounterViewSet)
+router.register('symptom', SymptomViewSet)
+router.register('examination', ExaminationViewSet)
+router.register('medicine', MedicineViewSet)
+router.register('medicine-power', MedicinePowerViewSet)
+router.register('advice', AdviceViewSet)

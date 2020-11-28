@@ -1,8 +1,15 @@
 from rest_framework import serializers
-from .models import Patient, Encounter, Advice, Medicine, Examination, Symptom
+from .models import Patient, Encounter, Advice, Medicine, Examination, Symptom, MedicinePower
 
 
 class EncounterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Encounter
+        fields = '__all__'
+        depth = 2
+
+
+class EncounterUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Encounter
         fields = '__all__'
@@ -16,9 +23,11 @@ class PatientSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class AdviceSerializer(serializers.ModelSerializer):
+class SymptomSerializer(serializers.ModelSerializer):
+    encounters = EncounterSerializer(many=True, read_only=True)
+
     class Meta:
-        model = Advice
+        model = Symptom
         fields = '__all__'
 
 
@@ -28,13 +37,20 @@ class ExaminationSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class MedicinePowerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MedicinePower
+        fields = '__all__'
+
+
 class MedicineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medicine
         fields = '__all__'
+        depth = 1
 
 
-class SymptomSerializer(serializers.ModelSerializer):
+class AdviceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Symptom
+        model = Advice
         fields = '__all__'
