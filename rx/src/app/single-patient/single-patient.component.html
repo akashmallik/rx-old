@@ -18,11 +18,11 @@
                 Encounters
                 <mat-card-content>
                     <mat-list>
-                        <a mat-button *ngFor="let e of encounters; index as i"
+                        <a mat-button *ngFor="let e of patient.encounters; index as i"
                         routerLink="/patients/{{id}}/"
                         [queryParams]="{ encounter: e.id }"
                         [class.active]="encounterId == e.id">
-                            <strong>Encounter-{{ i+1 }}</strong> [{{ e.date }}]
+                            <strong>{{ e.date }}</strong> 
                         </a>
                     </mat-list>
                 </mat-card-content>
@@ -51,52 +51,45 @@
         <div class="col-md-9">
             <mat-tab-group>
                 <mat-tab label="C/C">
-                    <mat-list>
-                        <mat-list-item *ngFor="let s of symptoms">
-                            <h4 matLine>{{ s.symptom }}</h4>
-                            <button mat-icon-button color="primary" (click)="sigleSymptom(s)">
-                                <i class="material-icons">edit</i>
-                            </button>
-                            <button mat-icon-button color="warn" (click)="deleteSymptom(s)">
+                    <!-- <mat-list>
+                        <mat-list-item *ngFor="let symptom of encount.symptoms">
+                            <h4 matLine>{{ symptom.symptom }}</h4>
+                            <button mat-icon-button color="warn" (click)="deleteSymptom(symptom)">
                                 <i class="material-icons">delete</i>
                             </button>
                         </mat-list-item>
-                    </mat-list>
-                    <form #symptomForm="ngForm" (ngSubmit)="symptom(symptomForm.value); symptomForm.reset()" class="mat-form">
-                        <mat-form-field class="mat-form-field" hidden>
-                            <textarea matInput [(ngModel)]="symp.id" name="id" placeholder="Id"></textarea>
-                        </mat-form-field>
-                        <mat-form-field class="mat-form-field" hidden>
-                            <textarea matInput [(ngModel)]="symp.patient" name="patient" placeholder="Patient"></textarea>
-                        </mat-form-field>
-                        <mat-form-field class="mat-form-field">
-                            <textarea matInput [(ngModel)]="symp.symptom" #sym="ngModel" name="symptom" placeholder="Symptom" required></textarea>
-                            <mat-error *ngIf="sym.touched && sym.invalid">The <strong>symptom</strong> field is required.</mat-error>
-                        </mat-form-field>
-                        <button mat-raised-button type="button" color="warn" (click)="symptomForm.reset(); symp = []" class="mr-2">Reset</button>
-                        <button mat-raised-button color="primary" [disabled]="symptomForm.invalid">{{ symp.length !== undefined ? 'Add' : 'Update' }}</button>
-                    </form>
+                    </mat-list> -->
 
+                    <form #symptomForm="ngForm" (ngSubmit)="symptom(symptomForm.value)" class="mat-form">
+                        <mat-form-field class="mat-form-field">
+                            <mat-label>Symptom</mat-label>
+                            <mat-select [(ngModel)]="encount.symptoms_id" name="symptoms" multiple>
+                              <mat-option *ngFor="let symptom of symptoms" [value]="symptom.id" selected>{{ symptom.symptom }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <button mat-raised-button color="primary">Add</button>
+                    </form>
                 </mat-tab>
-                <mat-tab label="Examination">
+
+                <mat-tab label="O/E">
                     <form #reportForm="ngForm" (ngSubmit)="report(reportForm.value); reportForm.reset()" class="mat-form">
                         <mat-form-field class="mat-form-field" hidden>
                             <input matInput [(ngModel)]="examination.id" name="id" placeholder="id">
                         </mat-form-field>
                         <mat-form-field class="mat-form-field">
-                            <input matInput [(ngModel)]="examination.pulse" name="pulse" placeholder="Pulse">
+                            <input matInput type="number" [(ngModel)]="examination.pulse" name="pulse" placeholder="Pulse">
                         </mat-form-field>
                         <mat-form-field class="mat-form-field">
                             <input matInput [(ngModel)]="examination.bp" name="bp" placeholder="BP">
                         </mat-form-field>
                         <mat-form-field class="mat-form-field">
-                            <input matInput [(ngModel)]="examination.temp" name="temp" placeholder="Temp">
+                            <input matInput type="number" [(ngModel)]="examination.temp" name="temp" placeholder="Temp">
                         </mat-form-field>
                         <mat-form-field class="mat-form-field">
-                            <input matInput [(ngModel)]="examination.resp_rate" name="resp_rate" placeholder="Resp rate">
+                            <input matInput type="number" [(ngModel)]="examination.resp_rate" name="resp_rate" placeholder="Resp rate">
                         </mat-form-field>
                         <mat-form-field class="mat-form-field">
-                            <input matInput [(ngModel)]="examination.height" name="height" placeholder="Height">
+                            <input matInput type="number" [(ngModel)]="examination.height" name="height" placeholder="Height">
                         </mat-form-field>
                         <mat-form-field class="mat-form-field">
                             <input matInput [(ngModel)]="examination.lifestyle" name="lifestyle" placeholder="Lifestyle">
@@ -104,18 +97,18 @@
                         <button mat-raised-button color="primary" [disabled]="reportForm.invalid">{{ examination.id ? 'Update' : 'Add' }}</button>
                     </form>
                 </mat-tab>
+
+                
                 <mat-tab label="Medicine">
                     <div *ngIf="encount.length === undefined">
-                        <div *ngFor="let n of encount.medicines">
-                            <div *ngFor="let m of medicines">
-                                <div *ngIf="n === m.id" class="mb-3">{{ m.medicine }}</div>
-                            </div>
-                        </div>
+                        <!-- <div *ngFor="let medicine of encount.medicines">
+                            <div>{{ medicine.name }} {{ medicine.power.name }}</div>
+                        </div> -->
                         <form #medicineForm="ngForm" (ngSubmit)="medicine(medicineForm.value)" class="mat-form">
                             <mat-form-field class="mat-form-field">
                                 <mat-label>Medicine</mat-label>
-                                <mat-select [(ngModel)]="encount.medicines" name="medicines" multiple>
-                                  <mat-option *ngFor="let m of medicines" [value]="m.id" selected>{{m.medicine}}</mat-option>
+                                <mat-select [(ngModel)]="encount.medicines_id" name="medicines" multiple>
+                                  <mat-option *ngFor="let medicine of medicines" [value]="medicine.id" selected>{{ medicine.name }} {{ medicine.power.name }}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <button mat-raised-button color="primary">Add</button>
@@ -126,27 +119,23 @@
                     </div>
                 </mat-tab>
                 <mat-tab label="Advice">
-                    <mat-list>
-                        <mat-list-item *ngFor="let a of advices">
-                            <h4 matLine>{{ a.advice }}</h4>
-                            <button mat-icon-button color="warn" (click)="singleAdvice(a)">
-                                <i class="material-icons">edit</i>
-                            </button>
-                            <button mat-icon-button color="warn" (click)="deleteAdvice(a)">
+                    <!-- <mat-list>
+                        <mat-list-item *ngFor="let advice of encount.advices">
+                            <h4 matLine>{{ advice.advice }}</h4>
+                            <button mat-icon-button color="warn" (click)="deleteAdvice(advice)">
                                 <i class="material-icons">delete</i>
                             </button>
                         </mat-list-item>
-                    </mat-list>
-                    <form #adviceForm="ngForm" (ngSubmit)="advice(adviceForm.value); adviceForm.reset()" class="mat-form">
-                        <mat-form-field class="mat-form-field" hidden>
-                            <textarea matInput [(ngModel)]="advic.id" name="id" placeholder="Id"></textarea>
-                        </mat-form-field>
+                    </mat-list> -->
+
+                    <form #adviceForm="ngForm" (ngSubmit)="advice(adviceForm.value)" class="mat-form">
                         <mat-form-field class="mat-form-field">
-                            <textarea matInput [(ngModel)]="advic.advice" #adv="ngModel" name="advice" placeholder="Advice" required></textarea>
-                            <mat-error *ngIf="adv.touched && adv.invalid">The <strong>advice</strong> field is required.</mat-error>
+                            <mat-label>Advice</mat-label>
+                            <mat-select [(ngModel)]="encount.advices_id" name="advices" multiple>
+                              <mat-option *ngFor="let advice of advices" [value]="advice.id" selected>{{ advice.advice }}</mat-option>
+                            </mat-select>
                         </mat-form-field>
-                        <button mat-raised-button type="button" color="warn" (click)="adviceForm.reset(); advic = []" class="mr-2">Reset</button>
-                        <button mat-raised-button color="primary" [disabled]="adviceForm.invalid">{{ advic.length !== undefined ? 'Add' : 'Update' }}</button>
+                        <button mat-raised-button color="primary">Update</button>
                     </form>
                 </mat-tab>
                 <mat-tab label="Prescription">
@@ -186,22 +175,23 @@
                                 <div class="col-4">
                                     <h4>Symptoms</h4> <hr>
                                     <ul>
-                                        <li *ngFor="let s of symptoms">
+                                        <li *ngFor="let s of encount.symptoms">
                                             {{ s.symptom }}
                                         </li>
                                     </ul>
                                     <h4>General Info</h4> <hr>
                                     <ul>
-                                        <li>Pulse: {{ examination.pulse }}</li>
-                                        <li>B.P.: {{ examination.bp }}</li>
-                                        <li>Temp: {{ examination.temp }}</li>
-                                        <li>Resp rate: {{ examination.resp_rate }}</li>
-                                        <li>Height: {{ examination.height }}</li>
-                                        <li>Lifestyle: {{ examination.lifestyle }}</li>
+                                        <li>Pulse: {{ encount.examination.pulse }}</li>
+                                        <li>B.P.: {{ encount.examination.bp }}</li>
+                                        <li>Temp: {{ encount.examination.temp }}</li>
+                                        <li>Resp rate: {{ encount.examination.resp_rate }}</li>
+                                        <li>Height: {{ encount.examination.height }}</li>
+                                        <li>Lifestyle: {{ encount.
+                                            examination.lifestyle }}</li>
                                     </ul>
                                     <h4>Advices</h4> <hr>
                                     <ul>
-                                        <li *ngFor="let a of advices">
+                                        <li *ngFor="let a of encount.advices">
                                             {{ a.advice }}
                                         </li>
                                     </ul>
@@ -209,10 +199,8 @@
                                 </div>
                                 <div class="col-8">
                                     <h4>Medicines</h4> <hr>
-                                    <ul *ngFor="let n of encount.medicines">
-                                        <div *ngFor="let m of medicines">
-                                            <li *ngIf="n === m.id">{{ m.medicine }}</li>
-                                        </div>
+                                    <ul *ngFor="let medicine of encount.medicines">
+                                        <li>{{ medicine.name }} {{ medicine.power.name }}</li>
                                     </ul>
                                 </div>
                             </div>

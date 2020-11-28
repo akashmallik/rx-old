@@ -20,6 +20,9 @@ export class EncounterService {
     return this.http.post(this.configUrl, resource);
   }
   update(id, resource) {
+    return this.http.put(this.configUrl + id + '/', resource);
+  }
+  partial_update(id, resource) {
     return this.http.patch(this.configUrl + id + '/', resource);
   }
   delete(id) {

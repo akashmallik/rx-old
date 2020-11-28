@@ -2,7 +2,7 @@
 <mat-dialog-content>
     <form #medicineForm="ngForm" class="mat-form">
         <mat-form-field class="mat-form-field">
-            <input matInput [(ngModel)]="data.medicine" #medicine="ngModel" name="medicine" placeholder="Medicine" required>
+            <input matInput [(ngModel)]="data.name" #medicine="ngModel" name="name" placeholder="Medicine Name" required>
             <mat-error *ngIf="medicine.touched && medicine.invalid">The <strong>medicine</strong> field is required.</mat-error>
         </mat-form-field>
         <mat-form-field class="mat-form-field" hidden="true">

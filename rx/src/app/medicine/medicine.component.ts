@@ -6,7 +6,7 @@ import { MedicineDialogComponent } from '../medicine-dialog/medicine-dialog.comp
 
 export interface Medicine {
   id: number;
-  medicine: string;
+  name: string;
 }
 
 @Component({
