@@ -1,0 +1,70 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~normalize.css/normalize.css";
+@import "~bootstrap/dist/css/bootstrap-grid.min.css";
+// @import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~ngx-toastr/toastr';
+
+@import url('https://fonts.googleapis.com/css?family=Iceland&display=swap');
+
+.mat-form {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+.active {
+  color: #ffffff !important;
+  background-color: #3f51b5 !important
+}
+
+mat-form-field[hidden] {
+  display: none;
+}
+
+.text-center {
+  text-align: center !important;
+}
+.text-left {
+  text-align: left !important;
+}
+.text-right {
+  text-align: right !important;
+}
+// .text-capitalize{
+//   text-
+// }
+
+.copyright {
+  font-size: .75rem;
+  margin-bottom: 2rem;
+}
+
+
+footer {
+  margin-top: 2.5rem;
+  padding: 5px 0;
+  background-color: #000000b3;
+  
+  .copyright {
+    color: #ffffff;
+    font-size: 1rem;
+    padding: .5rem 0;
+    margin-bottom: 0;
+  }
+}
+
+
+@media print {
+  .mat-tab-labels {
+      display: none !important;
+  }
+}
