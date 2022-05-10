@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AdviceService {
-  private configUrl = environment.API_URL + '/advice/';
+  private configUrl = environment.API_URL + '/advices/';
 
   constructor(private http: HttpClient) { }
 
