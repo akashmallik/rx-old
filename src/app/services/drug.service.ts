@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EncounterService {
-  private configUrl = environment.API_URL + '/encounters/';
+export class DrugService {
+  private configUrl = environment.API_URL + '/drugs/';
 
   constructor(private http: HttpClient) { }
 
@@ -20,7 +20,7 @@ export class EncounterService {
     return this.http.post(this.configUrl, resource);
   }
   update(id, resource) {
-    return this.http.patch(this.configUrl + id + '/', resource);
+    return this.http.put(this.configUrl + id + '/', resource);
   }
   delete(id) {
     return this.http.delete(this.configUrl + id + '/');

@@ -33,6 +33,8 @@ import { SinglePatientComponent } from './single-patient/single-patient.componen
 import { MatNativeDateModule } from '@angular/material/core';
 import { MedicineComponent } from './medicine/medicine.component';
 import { MedicineDialogComponent } from './medicine-dialog/medicine-dialog.component';
+import { DatePipe } from '@angular/common';
+import { EncounterComponent } from './encounter/encounter.component';
 
 
 @NgModule({
@@ -43,7 +45,8 @@ import { MedicineDialogComponent } from './medicine-dialog/medicine-dialog.compo
     NavbarComponent,
     SinglePatientComponent,
     MedicineComponent,
-    MedicineDialogComponent
+    MedicineDialogComponent,
+    EncounterComponent
   ],
   imports: [
     BrowserModule,
@@ -73,6 +76,7 @@ import { MedicineDialogComponent } from './medicine-dialog/medicine-dialog.compo
     QRCodeModule
   ],
   providers: [
+    DatePipe
     // { provide: MatDialogRef, useValue: {} },
     // { provide: MAT_DIALOG_DATA, useValue: [] },
   ],

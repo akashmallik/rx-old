@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class SymptomService {
-  private configUrl = environment.API_URL + '/symptom/';
+  private configUrl = environment.API_URL + '/symptoms/';
 
   constructor(private http: HttpClient) { }
 
