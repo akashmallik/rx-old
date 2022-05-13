@@ -1,0 +1,51 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <mat-card class="example-card">
+                <mat-card-header>
+                    <!-- <div mat-card-avatar [ngStyle]="{ 'background-image': 'url(' + patient.avatar + ')', 'background-size': 'cover'}"></div> -->
+                    <mat-card-title>{{ patient.name }}</mat-card-title>
+                    <mat-card-subtitle><strong>Sex:</strong> {{ patient.sex }} <strong>Age:</strong> {{ patient.age }}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <strong>Blood Group:</strong> {{ patient.blood_group }} <br>
+                    <strong>Phone:</strong> {{ patient.phone }} <br>
+                    <strong>Email:</strong> {{ patient.email }} <br>
+                    <strong>Address:</strong> {{ patient.address }}
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="mt-3">
+                Encounter List
+                <mat-card-content>
+                    <mat-list>
+                        <a mat-button *ngFor="let e of encounters; index as i"
+                        routerLink="/patients/{{id}}/encounters/{{e.id}}"
+                        [class.active]="encounterId == e.id">
+                            <strong>Encounter-{{ i+1 }}</strong> [{{ e.date }}]
+                        </a>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+            <div class="mat-elevation-z8">
+            </div>
+
+            <form #encounterForm="ngForm" (ngSubmit)="encounter(encounterForm.value)" class="mat-form">
+                <mat-form-field class="mat-form-field">
+                    <input matInput [matDatepicker]="picker" ngModel name="date" placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="mat-form-field">
+                    <mat-label>Visit Type</mat-label>
+                    <mat-select ngModel name="visit_type">
+                        <mat-option *ngFor="let v of visit" [value]="v.key">
+                        {{ v.value }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <button mat-raised-button color="primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
